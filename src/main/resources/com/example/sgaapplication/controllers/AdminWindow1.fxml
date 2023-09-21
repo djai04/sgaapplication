@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="com.example.sgaapplication.controllers.Admin1Controller">
+   <children>
+      <Label layoutX="85.0" layoutY="102.0" text="Pantalla de admin" />
+      <TextField fx:id="usernameInput" layoutX="350.0" layoutY="98.0" />
+      <TextField fx:id="passwordInput" layoutX="350.0" layoutY="155.0" />
+      <Label layoutX="292.0" layoutY="102.0" text="Usuario:" />
+      <Label layoutX="270.0" layoutY="159.0" text="Contraseña:" />
+      <Button fx:id="addButton" layoutX="399.0" layoutY="212.0" mnemonicParsing="false" text="Añadir" onAction="#onAddButtonClick" />
+   </children>
+</Pane>
