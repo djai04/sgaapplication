@@ -19,6 +19,7 @@ public class ServiceAeropuerto {
         aeropuerto.setCiudad(ciudad);
         aeropuerto.setCapacidadPuertas(capacidadPuertas);
         aeropuerto.setCapacidadEstacionamiento(capacidadEstacionamiento);
+        aeropuerto.setContrasena(codigoAeropuerto);
 
         return repositoryAeropuerto.save(aeropuerto);    
     }

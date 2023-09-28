@@ -1,4 +1,6 @@
-package com.example.sgaapplication.services.aeropuerto;
+package com.example.sgaapplication.services.local;
+
+import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,19 +11,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="Aeropuerto")
+@Table(name="Local")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aeropuerto {
+public class Local {
     @Id
-    private String codigoAeropuerto;
+    private String codigoLocal;
 
-    private String nombreAeropuerto;
-    private String pais;
-    private String ciudad;
-    private int capacidadPuertas;
-    private int capacidadEstacionamiento;
+    private String nombreLocal;
+    private Aeropuerto aeropuertoDelLocal;
     private String contrasena;
 }

@@ -20,4 +20,5 @@ public class Aerolinea {
 
     private String nombreAerolinea;
     private String pais;
+    private String contrasena;
 }
