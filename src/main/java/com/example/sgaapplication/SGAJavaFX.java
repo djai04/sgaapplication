@@ -3,11 +3,7 @@ package com.example.sgaapplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import com.example.sgaapplication.controllers.Admin1Controller;
-import com.example.sgaapplication.controllers.AdminTabbedWindow1Controller;
 import com.example.sgaapplication.controllers.Login2Controller;
-import com.example.sgaapplication.controllers.LoginController;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;

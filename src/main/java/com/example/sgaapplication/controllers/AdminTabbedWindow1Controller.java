@@ -1,14 +1,11 @@
 package com.example.sgaapplication.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryCliente;
 import com.example.sgaapplication.services.cliente.ServiceCliente;
 
-import jakarta.transaction.UserTransaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
