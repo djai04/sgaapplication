@@ -63,7 +63,7 @@ public class Login2Controller {
     public void initialize() {
         typeInput.getItems().removeAll(typeInput.getItems());
         typeInput.setValue("Aeropuerto");
-        typeInput.getItems().addAll("Aeropuerto", "Aerolinea");
+        typeInput.getItems().addAll("Aeropuerto", "Aerolinea", "Admin");
     }
 
     @FXML
