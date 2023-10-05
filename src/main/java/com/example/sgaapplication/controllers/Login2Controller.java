@@ -47,7 +47,7 @@ public class Login2Controller {
         usernameInput.requestFocus(); **/
         if (usernameInput.getText().equals("admin") && passwordInput.getText().equals("admin")) {
             FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
-            Parent root = fxweaver1.loadView(AdminTabbedWindow1Controller.class);
+            Parent root = fxweaver1.loadView(AdminTabbedWindow2Controller.class);
             Scene scene = loginButton.getScene();
             scene.setRoot(root);
         } else {

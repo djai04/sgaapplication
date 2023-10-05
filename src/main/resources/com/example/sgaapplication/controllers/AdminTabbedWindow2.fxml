@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" 
+  fx:controller="com.example.sgaapplication.controllers.AdminTabbedWindow2Controller">
+  <tabs>
+    <Tab text="Alta Aeropuerto">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="56.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo:" />
+                  <Text layoutX="56.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" />
+                  <Text layoutX="56.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pais:" />
+                  <Text layoutX="59.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:" />
+                  <TextField id="AeropuertoCodigo" layoutX="121.0" layoutY="50.0" fx:id="AeropuertoCodigo" />
+                  <TextField id="AeropuertoNombre" layoutX="121.0" layoutY="92.0" fx:id="AeropuertoNombre"/>
+                  <TextField id="AeropuertoPais" layoutX="121.0" layoutY="132.0" fx:id="AeropuertoPais"/>
+                  <TextField id="AeropuertoCiudad" layoutX="121.0" layoutY="173.0" fx:id="AeropuertoCiudad"/>
+                  <Button id="AltaAeropuerto" layoutX="121.0" layoutY="247.0" mnemonicParsing="false" text="Dar de alta" onAction="#onAddAeropuertoButtonClick"/>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Alta Aerolinea">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="57.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo:" />
+                  <TextField id="AerolineaNombre" layoutX="128.0" layoutY="106.0" fx:id="AerolineaNombre"/>
+                  <Text layoutX="57.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" />
+                  <TextField id="AerolineaCodigo" layoutX="128.0" layoutY="55.0" fx:id="AerolineaCodigo"/>
+                  <Text layoutX="57.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pais:" />
+                  <TextField id="AerolineaPais" layoutX="128.0" layoutY="155.0" fx:id="AerolineaPais"/>
+                  <Button id="AltaAerolinea" layoutX="128.0" layoutY="225.0" mnemonicParsing="false" text="Dar de alta" onAction="#onAddAerolineaButtonClick"/>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>
