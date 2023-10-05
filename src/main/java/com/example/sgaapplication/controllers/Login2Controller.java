@@ -76,10 +76,10 @@ public class Login2Controller {
         } else if (typeInput.getValue().equals("Aeropuerto")) {
             if (repositoryAeropuerto.existsById(usernameInput.getText())) {
                 if (repositoryAeropuerto.findByCodigoAeropuerto(usernameInput.getText()).getContrasena().equals(passwordInput.getText())) {
-                    /**FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
+                    FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
                     Parent root = fxweaver1.loadView(AeropuertoTabbedWindow1Controller.class);
                     Scene scene = loginButton.getScene();
-                    scene.setRoot(root);**/
+                    scene.setRoot(root);
                 } else {
                     System.out.println("Contraseña incorrecta");
                 }
