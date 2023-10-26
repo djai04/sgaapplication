@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryAerolinea;
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
+import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 import com.example.sgaapplication.services.cliente.ServiceCliente;
@@ -89,6 +90,8 @@ public class Login2Controller {
         } else if (typeInput.getValue().equals("Aerolinea")) {
             if (repositoryAerolinea.existsById(usernameInput.getText())) {
                 if (repositoryAerolinea.findByCodigoAerolinea(usernameInput.getText()).getContrasena().equals(passwordInput.getText())) {
+                    UserSession usr = UserSession.getInstance();
+                    usr.setCodigo(usernameInput.getText());
                     FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
                     Parent root = fxweaver1.loadView(AerolineaTabbedWindow1Controller.class);
                     Scene scene = loginButton.getScene();

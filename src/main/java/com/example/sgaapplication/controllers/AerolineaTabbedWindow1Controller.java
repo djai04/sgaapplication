@@ -1,8 +1,12 @@
 package com.example.sgaapplication.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.example.sgaapplication.persistency.RepositoryAvion;
+import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
+import com.example.sgaapplication.services.avion.ServiceAvion;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +19,12 @@ import net.rgielen.fxweaver.core.FxmlView;
 @Controller
 @FxmlView("AerolineaTabbedWindow1.fxml")
 public class AerolineaTabbedWindow1Controller {
+    @Autowired
+    RepositoryAvion repositoryAvion;
+
+    @Autowired
+    ServiceAvion serviceAvion;
+
     @FXML
     private Button AvionAlta;
 
@@ -53,7 +63,9 @@ public class AerolineaTabbedWindow1Controller {
 
     @FXML
     void onAddAvionButtonClick(ActionEvent event) {
-
+        UserSession loggedUser = UserSession.getInstance();
+        System.out.println(loggedUser.getCodigo());
+        serviceAvion.saveAvion(AvionMatricula.getText(), AvionCapacidadCarga.getText(), AvionCapacidadAsientos.getText(), loggedUser.getCodigo());
     }
 
     @FXML
