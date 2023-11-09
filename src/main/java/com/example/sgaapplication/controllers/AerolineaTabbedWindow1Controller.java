@@ -10,6 +10,7 @@ import com.example.sgaapplication.persistency.RepositoryAvion;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
+import com.example.sgaapplication.services.avion.Avion;
 import com.example.sgaapplication.services.avion.ServiceAvion;
 
 import javafx.event.ActionEvent;
@@ -80,6 +81,13 @@ public class AerolineaTabbedWindow1Controller {
         for (Aeropuerto aeropuerto : aeropuertos) {
             VueloOrigenCombo.getItems().add(aeropuerto.getNombreAeropuerto());
             VueloDestinoCombo.getItems().add(aeropuerto.getNombreAeropuerto());
+        }
+
+        List<Avion> aviones = repositoryAvion.findAll();
+        VueloAvionCombo.getItems().removeAll(VueloAvionCombo.getItems());
+
+        for (Avion avion : aviones) {
+            VueloAvionCombo.getItems().add(avion.getMatricula());
         }
     }
 
