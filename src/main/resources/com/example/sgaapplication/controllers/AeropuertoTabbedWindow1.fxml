@@ -43,14 +43,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" 
   fx:controller="com.example.sgaapplication.controllers.AeropuertoTabbedWindow1Controller">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="400.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Alta de Funcionarios">
             <content>
-              <AnchorPane maxWidth="700.0" minHeight="0.0" minWidth="7.0" prefHeight="371.0" prefWidth="700.0">
+              <AnchorPane maxWidth="700.0" minHeight="0.0" minWidth="7.0" prefHeight="371.0" prefWidth="1000.0">
                      <children>
                         <Text layoutX="39.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Completo" wrappingWidth="118.13665771484375" />
                         <TextField fx:id="FuncionarioNombre" layoutX="160.0" layoutY="27.0" prefHeight="26.0" prefWidth="234.0" />
@@ -80,15 +80,20 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="ValidacionTabla" layoutX="14.0" layoutY="14.0" prefHeight="311.0" prefWidth="404.0">
+                        <TableView fx:id="ValidacionTabla" layoutX="14.0" layoutY="14.0" prefHeight="311.0" prefWidth="739.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Aerolinea" />
-                            <TableColumn prefWidth="75.0" text="Vuelo" />
-                              <TableColumn prefWidth="81.60003662109375" text="Hora llegada" />
-                              <TableColumn prefWidth="89.5999755859375" text="Puerta llegada" />
+                            <TableColumn fx:id="aerolinaColumna" prefWidth="75.0" text="Aerolinea" />
+                            <TableColumn fx:id="codigoColumna" prefWidth="75.0" text="Codigo" />
+                            <TableColumn fx:id="matriculaColumna" prefWidth="75.0" text="Matricula" />
+                            <TableColumn fx:id="origenColumna" prefWidth="75.0" text="Origen" />
+                            <TableColumn fx:id="destinoColumna" prefWidth="75.0" text="Destino" />
+                            <TableColumn fx:id="fechaSalidaColumna" prefWidth="90.0" text="Fecha salida" />
+                            <TableColumn fx:id="fechaLlegadaColumna" prefWidth="90.0" text="Fecha llegada" />
+                            <TableColumn fx:id="horaSalidaColumna" prefWidth="90.0" text="Hora salida" />
+                            <TableColumn fx:id="horaLlegadaColumna" prefWidth="90.0" text="Hora llegada" />
                           </columns>
                         </TableView>
-                        <Button fx:id="ValidacionBoton" layoutX="470.0" layoutY="147.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" text="Validar Seleccionados" />
+                        <Button fx:id="ValidacionBoton" layoutX="765.0" layoutY="280.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" text="Validar seleccionado" />
                      </children></AnchorPane>
             </content>
           </Tab>
