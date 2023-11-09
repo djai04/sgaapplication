@@ -2,7 +2,6 @@ package com.example.sgaapplication.services.aeropuerto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 
 @Service
