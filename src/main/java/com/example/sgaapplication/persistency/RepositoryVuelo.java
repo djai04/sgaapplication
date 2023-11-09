@@ -6,4 +6,6 @@ import com.example.sgaapplication.services.vuelo.Vuelo;
 
 public interface RepositoryVuelo extends JpaRepository<Vuelo, String> {
     Vuelo findByCodigoVuelo(String codigoVuelo);
+
+    Vuelo findByAerolinea(String aerolinea);
 }

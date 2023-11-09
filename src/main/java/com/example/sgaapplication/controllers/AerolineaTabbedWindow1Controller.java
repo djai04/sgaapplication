@@ -89,8 +89,8 @@ public class AerolineaTabbedWindow1Controller {
         VueloDestinoCombo.getItems().removeAll(VueloDestinoCombo.getItems());
         
         for (Aeropuerto aeropuerto : aeropuertos) {
-            VueloOrigenCombo.getItems().add(aeropuerto.getNombreAeropuerto());
-            VueloDestinoCombo.getItems().add(aeropuerto.getNombreAeropuerto());
+            VueloOrigenCombo.getItems().add(aeropuerto.getCodigoAeropuerto());
+            VueloDestinoCombo.getItems().add(aeropuerto.getCodigoAeropuerto());
         }
 
         List<Avion> aviones = repositoryAvion.findAll();

@@ -1,9 +1,15 @@
 package com.example.sgaapplication.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.example.sgaapplication.persistency.RepositoryVuelo;
+import com.example.sgaapplication.persistency.UserSession;
+import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
+import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 import com.example.sgaapplication.services.vuelo.Vuelo;
-import com.example.sgaapplication.services.vuelo.VueloSkeleton;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +26,17 @@ import net.rgielen.fxweaver.core.FxmlView;
 @Controller
 @FxmlView("AeropuertoTabbedWindow1.fxml")
 public class AeropuertoTabbedWindow1Controller {
+
+    public AeropuertoTabbedWindow1Controller() {
+        System.out.println("=========HOLA==========");
+    }
+
+    @Autowired
+    RepositoryVuelo repositoryVuelo;
+
+    @Autowired
+    ServiceVuelo serviceVuelo;
+
     @FXML
     private TableView<?> ConsultaTabla;
 
@@ -48,34 +65,58 @@ public class AeropuertoTabbedWindow1Controller {
     private TableView<Vuelo> ValidacionTabla;
 
     @FXML
-    public TableColumn<Vuelo, String> aerolineaColumna;
+    private TableColumn<Vuelo, String> aerolineaColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> codigoColumna;
+    private TableColumn<Vuelo, String> codigoColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> matriculaColumna;
+    private TableColumn<Vuelo, String> matriculaColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> origenColumna;
+    private TableColumn<Vuelo, String> origenColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> destinoColumna;
+    private TableColumn<Vuelo, String> destinoColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> fechaSalidaColumna;
+    private TableColumn<Vuelo, String> fechaSalidaColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> fechaLlegadaColumna;
+    private TableColumn<Vuelo, String> fechaLlegadaColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> horaSalidaColumna;
+    private TableColumn<Vuelo, String> horaSalidaColumna;
 
     @FXML
-    public TableColumn<Vuelo, String> horaLlegadaColumna;
+    private TableColumn<Vuelo, String> horaLlegadaColumna;
 
     @FXML
     public void initialize() {
+        UserSession loggedUser = UserSession.getInstance();
 
+        List<Vuelo> vuelos = repositoryVuelo.findAll();
+
+        ObservableList<Vuelo> vuelosObservable = FXCollections.observableArrayList(vuelos);
+
+        ObservableList<Vuelo> vuelosEnTabla = FXCollections.observableArrayList();
+
+        for (Vuelo vuelo : vuelosObservable) {
+            if (vuelo.getAeropuertoOrigen().equals(loggedUser.getCodigo()) || vuelo.getAeropuertoDestino().equals(loggedUser.getCodigo())) {
+                vuelosEnTabla.add(vuelo);
+            }
+        }
+
+        ValidacionTabla.setItems(vuelosEnTabla);
+
+        aerolineaColumna.setCellValueFactory(new PropertyValueFactory("aerolinea"));
+        codigoColumna.setCellValueFactory(new PropertyValueFactory("codigoVuelo"));
+        matriculaColumna.setCellValueFactory(new PropertyValueFactory("matriculaAvion"));
+        origenColumna.setCellValueFactory(new PropertyValueFactory("aeropuertoOrigen"));
+        destinoColumna.setCellValueFactory(new PropertyValueFactory("aeropuertoDestino"));
+        fechaSalidaColumna.setCellValueFactory(new PropertyValueFactory("fechaSalida"));
+        fechaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("fechaLlegada"));
+        horaSalidaColumna.setCellValueFactory(new PropertyValueFactory("horaSalida"));
+        horaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("horaLlegada"));
     }
 }

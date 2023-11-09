@@ -77,6 +77,8 @@ public class Login2Controller {
         } else if (typeInput.getValue().equals("Aeropuerto")) {
             if (repositoryAeropuerto.existsById(usernameInput.getText())) {
                 if (repositoryAeropuerto.findByCodigoAeropuerto(usernameInput.getText()).getContrasena().equals(passwordInput.getText())) {
+                    UserSession usr = UserSession.getInstance();
+                    usr.setCodigo(usernameInput.getText());
                     FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
                     Parent root = fxweaver1.loadView(AeropuertoTabbedWindow1Controller.class);
                     Scene scene = loginButton.getScene();
