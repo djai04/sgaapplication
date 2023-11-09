@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 import com.example.sgaapplication.persistency.RepositoryAvion;
+import com.example.sgaapplication.persistency.RepositoryVuelo;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 import com.example.sgaapplication.services.avion.Avion;
 import com.example.sgaapplication.services.avion.ServiceAvion;
+import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +37,13 @@ public class AerolineaTabbedWindow1Controller {
 
     @Autowired
     ServiceAeropuerto serviceAeropuerto;
+
+    @Autowired
+    RepositoryVuelo repositoryVuelo;
+
+    @Autowired
+    ServiceVuelo serviceVuelo;
+
 
     @FXML
     private Button AvionAlta;
@@ -74,6 +83,7 @@ public class AerolineaTabbedWindow1Controller {
 
     @FXML
     public void initialize() {
+        UserSession loggedUser = UserSession.getInstance();
         List<Aeropuerto> aeropuertos = repositoryAeropuerto.findAll();
         VueloOrigenCombo.getItems().removeAll(VueloOrigenCombo.getItems());
         VueloDestinoCombo.getItems().removeAll(VueloDestinoCombo.getItems());
@@ -87,7 +97,9 @@ public class AerolineaTabbedWindow1Controller {
         VueloAvionCombo.getItems().removeAll(VueloAvionCombo.getItems());
 
         for (Avion avion : aviones) {
-            VueloAvionCombo.getItems().add(avion.getMatricula());
+            if (avion.getAerolinea().equals(loggedUser.getCodigo())) {
+                VueloAvionCombo.getItems().add(avion.getMatricula());
+            }
         }
     }
 
@@ -106,5 +118,11 @@ public class AerolineaTabbedWindow1Controller {
     void onAddVueloButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
 
+        String flightCode = loggedUser.getCodigo() + VueloAvionCombo.getValue() + VueloHoraSalida.getText();
+
+        serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().now().toString(), VueloFechaLlegada.getValue().now().toString(), VueloHoraSalida.getText(), VueloHoraLlegada.getText());
+
+        VueloHoraLlegada.clear();
+        VueloHoraSalida.clear();
     }
 }
