@@ -1,11 +1,15 @@
 package com.example.sgaapplication.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 import com.example.sgaapplication.persistency.RepositoryAvion;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
+import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 import com.example.sgaapplication.services.avion.ServiceAvion;
 
 import javafx.event.ActionEvent;
@@ -24,6 +28,12 @@ public class AerolineaTabbedWindow1Controller {
 
     @Autowired
     ServiceAvion serviceAvion;
+
+    @Autowired
+    RepositoryAeropuerto repositoryAeropuerto;
+
+    @Autowired
+    ServiceAeropuerto serviceAeropuerto;
 
     @FXML
     private Button AvionAlta;
@@ -44,7 +54,10 @@ public class AerolineaTabbedWindow1Controller {
     private ComboBox<String> VueloAvionCombo;
 
     @FXML
-    private ComboBox<Aeropuerto> VueloDestinoCombo;
+    private ComboBox<String> VueloOrigenCombo;
+
+    @FXML
+    private ComboBox<String> VueloDestinoCombo;
 
     @FXML
     private DatePicker VueloFechaLlegada;
@@ -59,17 +72,31 @@ public class AerolineaTabbedWindow1Controller {
     private TextField VueloHoraSalida;
 
     @FXML
-    private ComboBox<Aeropuerto> VueloOrigenCombo;
+    public void initialize() {
+        List<Aeropuerto> aeropuertos = repositoryAeropuerto.findAll();
+        VueloOrigenCombo.getItems().removeAll(VueloOrigenCombo.getItems());
+        VueloDestinoCombo.getItems().removeAll(VueloDestinoCombo.getItems());
+        
+        for (Aeropuerto aeropuerto : aeropuertos) {
+            VueloOrigenCombo.getItems().add(aeropuerto.getNombreAeropuerto());
+            VueloDestinoCombo.getItems().add(aeropuerto.getNombreAeropuerto());
+        }
+    }
 
     @FXML
     void onAddAvionButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
         System.out.println(loggedUser.getCodigo());
         serviceAvion.saveAvion(AvionMatricula.getText(), AvionCapacidadCarga.getText(), AvionCapacidadAsientos.getText(), loggedUser.getCodigo());
+        AvionCapacidadAsientos.clear();
+        AvionCapacidadCarga.clear();
+        AvionMatricula.clear();
+        AvionMatricula.requestFocus();
     }
 
     @FXML
     void onAddVueloButtonClick(ActionEvent event) {
+        UserSession loggedUser = UserSession.getInstance();
 
     }
 }
