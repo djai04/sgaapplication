@@ -3,6 +3,7 @@ package com.example.sgaapplication.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
@@ -17,10 +18,13 @@ import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 
 @Controller
@@ -44,6 +48,8 @@ public class AerolineaTabbedWindow1Controller {
     @Autowired
     ServiceVuelo serviceVuelo;
 
+    @Autowired
+    ConfigurableApplicationContext applicationContext;
 
     @FXML
     private Button AvionAlta;
@@ -80,6 +86,9 @@ public class AerolineaTabbedWindow1Controller {
 
     @FXML
     private TextField VueloHoraSalida;
+
+    @FXML
+    private Button LogoutButton;
 
     @FXML
     public void initialize() {
@@ -124,5 +133,13 @@ public class AerolineaTabbedWindow1Controller {
 
         VueloHoraLlegada.clear();
         VueloHoraSalida.clear();
+    }
+
+    @FXML
+    void onLogoutButtonClick(ActionEvent event) {
+        FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
+        Parent root = fxweaver1.loadView(Login2Controller.class);
+        Scene scene = LogoutButton.getScene();
+        scene.setRoot(root);
     }
 }

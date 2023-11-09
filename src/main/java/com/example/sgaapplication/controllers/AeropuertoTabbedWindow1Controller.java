@@ -3,6 +3,7 @@ package com.example.sgaapplication.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryVuelo;
@@ -13,7 +14,10 @@ import com.example.sgaapplication.services.vuelo.Vuelo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -21,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 
 @Controller
@@ -28,8 +33,11 @@ import net.rgielen.fxweaver.core.FxmlView;
 public class AeropuertoTabbedWindow1Controller {
 
     public AeropuertoTabbedWindow1Controller() {
-        System.out.println("=========HOLA==========");
+        
     }
+
+    @Autowired
+    ConfigurableApplicationContext applicationContext;
 
     @Autowired
     RepositoryVuelo repositoryVuelo;
@@ -42,6 +50,9 @@ public class AeropuertoTabbedWindow1Controller {
 
     @FXML
     private ToggleButton FuncionarioAlta;
+
+    @FXML
+    private Button LogoutButton;
 
     @FXML
     private ComboBox<String> FuncionarioCargo;
@@ -118,5 +129,13 @@ public class AeropuertoTabbedWindow1Controller {
         fechaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("fechaLlegada"));
         horaSalidaColumna.setCellValueFactory(new PropertyValueFactory("horaSalida"));
         horaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("horaLlegada"));
+    }
+
+    @FXML
+    void onLogoutButtonClick(ActionEvent event) {
+        FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
+        Parent root = fxweaver1.loadView(Login2Controller.class);
+        Scene scene = LogoutButton.getScene();
+        scene.setRoot(root);
     }
 }
