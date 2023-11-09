@@ -48,21 +48,6 @@
    <children>
       <TabPane prefHeight="400.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Alta de Funcionarios">
-            <content>
-              <AnchorPane maxWidth="700.0" minHeight="0.0" minWidth="7.0" prefHeight="371.0" prefWidth="1000.0">
-                     <children>
-                        <Text layoutX="39.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Completo" wrappingWidth="118.13665771484375" />
-                        <TextField fx:id="FuncionarioNombre" layoutX="160.0" layoutY="27.0" prefHeight="26.0" prefWidth="234.0" />
-                        <Text layoutX="39.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cargo" />
-                        <Text layoutX="39.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identificador" />
-                        <TextField fx:id="FuncionarioIdentificador" layoutX="160.0" layoutY="105.0" />
-                        <ToggleButton fx:id="FuncionarioAlta" layoutX="164.0" layoutY="186.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="142.0" text="Dar de alta" />
-                        <ComboBox fx:id="FuncionarioCargo" layoutX="160.0" layoutY="66.0" prefWidth="150.0" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
           <!--
             <Tab text="Alta de Locales">
               <content>
@@ -119,6 +104,22 @@
               </content>
             </Tab>
             -->
+            <Tab text="Pistas y puertas">
+            <content>
+              <AnchorPane maxWidth="700.0" minHeight="0.0" minWidth="7.0" prefHeight="371.0" prefWidth="1000.0">
+                     <children>
+                        <Text layoutX="39.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad de pistas:" wrappingWidth="118.13665771484375" />
+                        <TextField fx:id="PistaCapacidad" layoutX="160.0" layoutY="80.0" prefHeight="26.0" prefWidth="100.0" />
+                        <ToggleButton fx:id="PistaAlta" layoutX="100.0" layoutY="186.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Modificar" />
+
+                        <Text layoutX="339.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad de puertas:" wrappingWidth="118.13665771484375" />
+                        <TextField fx:id="PuertaCapacidad" layoutX="460.0" layoutY="80.0" prefHeight="26.0" prefWidth="100.0" />
+                        <ToggleButton fx:id="PuertaAlta" layoutX="400.0" layoutY="186.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Modificar" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+
             <Tab text="Logout">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
