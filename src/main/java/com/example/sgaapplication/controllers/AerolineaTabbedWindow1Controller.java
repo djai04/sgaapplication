@@ -162,7 +162,7 @@ public class AerolineaTabbedWindow1Controller {
 
         String flightCode = loggedUser.getCodigo() + VueloAvionCombo.getValue() + VueloHoraSalida.getText();
 
-        if (VueloFechaLlegada.getValue().isAfter(VueloFechaSalida.getValue()) && timeParser(VueloHoraLlegada.getText()) != null && timeParser(VueloHoraSalida.getText()) != null) {
+        if ((VueloFechaLlegada.getValue().isAfter(VueloFechaSalida.getValue()) || VueloFechaLlegada.getValue().isEqual(VueloFechaSalida.getValue())) && timeParser(VueloHoraLlegada.getText()) != null && timeParser(VueloHoraSalida.getText()) != null) {
             System.out.println("------------------");
             System.out.println("Nice");
             System.out.println("------------------");
