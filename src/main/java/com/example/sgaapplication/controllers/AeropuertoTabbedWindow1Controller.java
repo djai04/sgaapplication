@@ -6,8 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
+import com.example.sgaapplication.persistency.RepositoryAerolinea;
 import com.example.sgaapplication.persistency.RepositoryVuelo;
 import com.example.sgaapplication.persistency.UserSession;
+import com.example.sgaapplication.services.aerolinea.Aerolinea;
+import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
+import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
+import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
 import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 import com.example.sgaapplication.services.vuelo.Vuelo;
@@ -44,6 +49,12 @@ public class AeropuertoTabbedWindow1Controller {
 
     @Autowired
     ServiceVuelo serviceVuelo;
+
+    @Autowired
+    RepositoryAerolinea repositoryAerolinea;
+
+    @Autowired
+    ServiceAerolinea serviceAerolinea;
 
     @FXML
     private TableView<?> ConsultaTabla;
@@ -103,6 +114,9 @@ public class AeropuertoTabbedWindow1Controller {
     private TableColumn<Vuelo, String> horaLlegadaColumna;
 
     @FXML
+    private ComboBox<String> aerolineasHabilitadasCombo;
+
+    @FXML
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
 
@@ -129,6 +143,14 @@ public class AeropuertoTabbedWindow1Controller {
         fechaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("fechaLlegada"));
         horaSalidaColumna.setCellValueFactory(new PropertyValueFactory("horaSalida"));
         horaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("horaLlegada"));
+
+        List<Aerolinea> aerolineas = repositoryAerolinea.findAll();
+
+        aerolineasHabilitadasCombo.getItems().removeAll(aerolineasHabilitadasCombo.getItems());
+        
+        for (Aerolinea aerolinea : aerolineas) {
+            aerolineasHabilitadasCombo.getItems().add(aerolinea.getCodigoAerolinea());
+        }
     }
 
     @FXML
@@ -137,5 +159,10 @@ public class AeropuertoTabbedWindow1Controller {
         Parent root = fxweaver1.loadView(Login2Controller.class);
         Scene scene = LogoutButton.getScene();
         scene.setRoot(root);
+    }
+
+    @FXML
+    void onHabilitarAerolineaButtonClick(ActionEvent event) {
+        
     }
 }
