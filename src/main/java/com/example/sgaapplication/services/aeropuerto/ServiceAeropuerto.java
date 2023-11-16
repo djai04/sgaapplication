@@ -1,5 +1,8 @@
 package com.example.sgaapplication.services.aeropuerto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +41,19 @@ public class ServiceAeropuerto {
         if (!esteAeropuerto.getAerolineasHabilitadas().contains(estaAerolinea)) {
             esteAeropuerto.getAerolineasHabilitadas().add(estaAerolinea);
         }
+    }
+
+    @Transactional
+    public List<String> getAerolineasAsociadas(String codigoAeropuerto) {
+        Aeropuerto esteAeropuerto = repositoryAeropuerto.findByCodigoAeropuerto(codigoAeropuerto);
+        List<Aerolinea> aerolineasYaHabilitadas = esteAeropuerto.getAerolineasHabilitadas();
+        List<String> codigosAerolineasYaHabilitadas = new ArrayList<>();
+
+        for (Aerolinea aerolinea : aerolineasYaHabilitadas) {
+            codigosAerolineasYaHabilitadas.add(aerolinea.getCodigoAerolinea());
+        }
+
+        return codigosAerolineasYaHabilitadas;
     }
     
 }

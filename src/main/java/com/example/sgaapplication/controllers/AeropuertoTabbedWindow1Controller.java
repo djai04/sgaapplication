@@ -157,8 +157,12 @@ public class AeropuertoTabbedWindow1Controller {
 
         aerolineasHabilitadasCombo.getItems().removeAll(aerolineasHabilitadasCombo.getItems());
         
+        List<String> aerolineasYaHabilitadas = serviceAeropuerto.getAerolineasAsociadas(loggedUser.getCodigo());
+        
         for (Aerolinea aerolinea : aerolineas) {
-            aerolineasHabilitadasCombo.getItems().add(aerolinea.getCodigoAerolinea());
+            if (!aerolineasYaHabilitadas.contains(aerolinea.getCodigoAerolinea())) {
+                aerolineasHabilitadasCombo.getItems().add(aerolinea.getCodigoAerolinea());
+            }
         }
     }
 
