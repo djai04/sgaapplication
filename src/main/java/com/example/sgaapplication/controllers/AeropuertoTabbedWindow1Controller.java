@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.sgaapplication.persistency.RepositoryAerolinea;
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
@@ -172,7 +173,6 @@ public class AeropuertoTabbedWindow1Controller {
     @FXML
     void onHabilitarAerolineaButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
-
         serviceAeropuerto.asociarAeropuertoAerolinea(loggedUser.getCodigo(), aerolineasHabilitadasCombo.getValue());
     }
 }
