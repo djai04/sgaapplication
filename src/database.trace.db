@@ -1,0 +1,4 @@
+2023-11-16 11:20:44 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "BOLETO" no encontrada
+Table "BOLETO" not found; SQL statement:
+SELECT * FROM BOLETO [42102-214]

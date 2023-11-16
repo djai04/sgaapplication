@@ -8,12 +8,14 @@ import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 import com.example.sgaapplication.persistency.RepositoryAvion;
+import com.example.sgaapplication.persistency.RepositoryBoleto;
 import com.example.sgaapplication.persistency.RepositoryVuelo;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 import com.example.sgaapplication.services.avion.Avion;
 import com.example.sgaapplication.services.avion.ServiceAvion;
+import com.example.sgaapplication.services.boleto.ServiceBoleto;
 import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 
 import javafx.event.ActionEvent;
@@ -47,6 +49,13 @@ public class AerolineaTabbedWindow1Controller {
 
     @Autowired
     ServiceVuelo serviceVuelo;
+
+    @Autowired
+    ServiceBoleto serviceBoleto;
+
+    @Autowired
+    RepositoryBoleto repositoryBoleto;
+
 
     @Autowired
     ConfigurableApplicationContext applicationContext;
@@ -89,6 +98,16 @@ public class AerolineaTabbedWindow1Controller {
 
     @FXML
     private Button LogoutButton;
+
+    @FXML
+    private Button agregarBoletoButton;
+
+    @FXML
+    private TextField codigoTextField;
+
+    @FXML
+    private TextField pasaporteTextField;
+
 
     @FXML
     public void initialize() {
@@ -142,4 +161,18 @@ public class AerolineaTabbedWindow1Controller {
         Scene scene = LogoutButton.getScene();
         scene.setRoot(root);
     }
+
+    @FXML
+    void onAgregarBoletoButtonClick() {
+        String codigo = codigoTextField.getText();
+        String pasaporte = pasaporteTextField.getText();
+
+        serviceBoleto.saveBoleto(codigo, pasaporte);
+
+        codigoTextField.clear();
+        pasaporteTextField.clear();
+
+        codigoTextField.requestFocus();
+    }
+
 }
