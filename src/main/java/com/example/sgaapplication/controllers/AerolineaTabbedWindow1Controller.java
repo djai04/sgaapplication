@@ -1,5 +1,7 @@
 package com.example.sgaapplication.controllers;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,7 +144,7 @@ public class AerolineaTabbedWindow1Controller {
         AvionMatricula.requestFocus();
     }
 
-    @FXML
+    /**@FXML
     void onAddVueloButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
 
@@ -152,6 +154,36 @@ public class AerolineaTabbedWindow1Controller {
 
         VueloHoraLlegada.clear();
         VueloHoraSalida.clear();
+    }**/
+
+    @FXML
+    void onAddVueloButtonClick(ActionEvent event) {
+        UserSession loggedUser = UserSession.getInstance();
+
+        String flightCode = loggedUser.getCodigo() + VueloAvionCombo.getValue() + VueloHoraSalida.getText();
+
+        if (VueloFechaLlegada.getValue().isAfter(VueloFechaSalida.getValue()) && timeParser(VueloHoraLlegada.getText()) != null && timeParser(VueloHoraSalida.getText()) != null) {
+            System.out.println("------------------");
+            System.out.println("Nice");
+            System.out.println("------------------");
+            serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().now().toString(), VueloFechaLlegada.getValue().now().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
+        }else {
+            System.out.println("------------------");
+            System.out.println("Error");
+            System.out.println("------------------");
+        }
+
+        VueloHoraLlegada.clear();
+        VueloHoraSalida.clear();
+    }
+
+    private LocalTime timeParser(String inputString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        try {
+            return LocalTime.parse(inputString, formatter);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     @FXML

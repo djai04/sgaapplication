@@ -1,5 +1,7 @@
 package com.example.sgaapplication.services.vuelo;
 
+import java.time.LocalTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -24,6 +26,6 @@ public class Vuelo {
     private String matriculaAvion;
     private String fechaSalida;
     private String fechaLlegada;
-    private String horaSalida;
-    private String horaLlegada;
+    private LocalTime horaSalida;
+    private LocalTime horaLlegada;
 }
