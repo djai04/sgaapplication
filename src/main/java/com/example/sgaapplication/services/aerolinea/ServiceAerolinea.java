@@ -12,7 +12,11 @@ public class ServiceAerolinea {
     private RepositoryAerolinea repositoryAerolinea;
 
     public Aerolinea insertAerolinea(String codigoAerolinea, String nombreAerolinea, String pais) {
-        Aerolinea aerolinea = new Aerolinea(codigoAerolinea, nombreAerolinea, pais, codigoAerolinea);
+        Aerolinea aerolinea = new Aerolinea();
+        aerolinea.setCodigoAerolinea(codigoAerolinea);
+        aerolinea.setNombreAerolinea(nombreAerolinea);
+        aerolinea.setPais(pais);
+        aerolinea.setContrasena(codigoAerolinea);
 
         return repositoryAerolinea.save(aerolinea);
     }

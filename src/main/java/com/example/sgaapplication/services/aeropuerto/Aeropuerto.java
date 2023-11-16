@@ -6,6 +6,8 @@ import com.example.sgaapplication.services.aerolinea.Aerolinea;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,5 +33,9 @@ public class Aeropuerto {
     private String contrasena;
 
     @ManyToMany
+    @JoinTable(
+        name = "aerolineas_aeropuertos_habilitar", 
+        joinColumns = @JoinColumn(name = "codigoAeropuerto"), 
+        inverseJoinColumns = @JoinColumn(name = "codigoAerolinea"))
     private List<Aerolinea> aerolineasHabilitadas;
 }

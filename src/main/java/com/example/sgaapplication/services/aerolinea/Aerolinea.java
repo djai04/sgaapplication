@@ -1,7 +1,12 @@
 package com.example.sgaapplication.services.aerolinea;
 
+import java.util.List;
+
+import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +26,7 @@ public class Aerolinea {
     private String nombreAerolinea;
     private String pais;
     private String contrasena;
+
+    @ManyToMany(mappedBy = "aerolineasHabilitadas")
+    private List<Aeropuerto> aeropuertosHabilitados;
 }

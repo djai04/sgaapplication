@@ -7,6 +7,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryAerolinea;
+import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 import com.example.sgaapplication.persistency.RepositoryVuelo;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aerolinea.Aerolinea;
@@ -14,6 +15,7 @@ import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
+import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 import com.example.sgaapplication.services.vuelo.Vuelo;
 
@@ -55,6 +57,12 @@ public class AeropuertoTabbedWindow1Controller {
 
     @Autowired
     ServiceAerolinea serviceAerolinea;
+
+    @Autowired
+    RepositoryAeropuerto repositoryAeropuerto;
+
+    @Autowired
+    ServiceAeropuerto serviceAeropuerto;
 
     @FXML
     private TableView<?> ConsultaTabla;
@@ -163,6 +171,8 @@ public class AeropuertoTabbedWindow1Controller {
 
     @FXML
     void onHabilitarAerolineaButtonClick(ActionEvent event) {
-        
+        UserSession loggedUser = UserSession.getInstance();
+
+        serviceAeropuerto.asociarAeropuertoAerolinea(loggedUser.getCodigo(), aerolineasHabilitadasCombo.getValue());
     }
 }
