@@ -88,11 +88,11 @@
                      <children>
                         <Text layoutX="39.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad de pistas:" wrappingWidth="118.13665771484375" />
                         <TextField fx:id="PistaCapacidad" layoutX="160.0" layoutY="60.0" prefHeight="26.0" prefWidth="100.0" />
-                        <ToggleButton fx:id="PistaAlta" layoutX="300.0" layoutY="54.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Modificar" />
+                        <ToggleButton fx:id="PistaAlta" layoutX="300.0" layoutY="54.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Modificar" onAction="#onModificarPistasButtonClick" />
 
                         <Text layoutX="39.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad de puertas:" wrappingWidth="118.13665771484375" />
                         <TextField fx:id="PuertaCapacidad" layoutX="160.0" layoutY="166.0" prefHeight="26.0" prefWidth="100.0" />
-                        <ToggleButton fx:id="PuertaAlta" layoutX="300.0" layoutY="160.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Modificar" />
+                        <ToggleButton fx:id="PuertaAlta" layoutX="300.0" layoutY="160.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Modificar" onAction="#onModificarPuertasButtonClick" />
 
                         <Text layoutX="39.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aerolinea:" wrappingWidth="118.13665771484375" />
                         <ComboBox fx:id="aerolineasHabilitadasCombo" layoutX="160.0" layoutY="271.0" prefHeight="26.0" prefWidth="100.0" />

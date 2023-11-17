@@ -55,5 +55,17 @@ public class ServiceAeropuerto {
 
         return codigosAerolineasYaHabilitadas;
     }
+
+    public void modificarPuertas(String codigoAeropuerto, int capacidadPuertas) {
+        Aeropuerto esteAeropuerto = repositoryAeropuerto.findByCodigoAeropuerto(codigoAeropuerto);
+        esteAeropuerto.setCapacidadPuertas(capacidadPuertas);
+        repositoryAeropuerto.save(esteAeropuerto);
+    }
+
+    public void modificarPistas(String codigoAeropuerto, int capacidadPistas) {
+        Aeropuerto esteAeropuerto = repositoryAeropuerto.findByCodigoAeropuerto(codigoAeropuerto);
+        esteAeropuerto.setCapacidadEstacionamiento(capacidadPistas);
+        repositoryAeropuerto.save(esteAeropuerto);
+    }
     
 }

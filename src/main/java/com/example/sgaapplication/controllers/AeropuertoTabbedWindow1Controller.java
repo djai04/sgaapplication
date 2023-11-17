@@ -33,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 
@@ -126,6 +127,12 @@ public class AeropuertoTabbedWindow1Controller {
     private ComboBox<String> aerolineasHabilitadasCombo;
 
     @FXML
+    private TextField PuertaCapacidad;
+
+    @FXML
+    private TextField PistaCapacidad;
+
+    @FXML
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
 
@@ -178,5 +185,21 @@ public class AeropuertoTabbedWindow1Controller {
     void onHabilitarAerolineaButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
         serviceAeropuerto.asociarAeropuertoAerolinea(loggedUser.getCodigo(), aerolineasHabilitadasCombo.getValue());
+    }
+
+    @FXML
+    void onModificarPuertasButtonClick(ActionEvent event) {
+        UserSession loggedUser = UserSession.getInstance();
+        serviceAeropuerto.modificarPuertas(loggedUser.getCodigo(), Integer.parseInt(PuertaCapacidad.getText()));
+        PuertaCapacidad.clear();
+        PuertaCapacidad.requestFocus();
+    }
+
+    @FXML
+    void onModificarPistasButtonClick(ActionEvent event) {
+        UserSession loggedUser = UserSession.getInstance();
+        serviceAeropuerto.modificarPistas(loggedUser.getCodigo(), Integer.parseInt(PistaCapacidad.getText()));
+        PistaCapacidad.clear();
+        PistaCapacidad.requestFocus();
     }
 }
