@@ -19,12 +19,12 @@
             <Image url="@../imagenes/avion%201.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="82.0" layoutY="65.0" text="SGA" textFill="#00bbff">
+      <Label layoutX="82.0" layoutY="90.0" text="SGA" textFill="#00bbff">
          <font>
             <Font name="System Bold" size="75.0" />
          </font>
       </Label>
-      <Label layoutX="47.0" layoutY="174.0" text="Sistema de Gestion de Aeropuertos">
+      <Label layoutX="47.0" layoutY="200.0" text="Sistema de Gestion de Aeropuertos">
          <font>
             <Font size="14.0" />
          </font>

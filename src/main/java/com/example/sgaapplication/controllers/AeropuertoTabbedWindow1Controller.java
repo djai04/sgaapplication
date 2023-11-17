@@ -20,6 +20,7 @@ import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 import com.example.sgaapplication.services.vuelo.Vuelo;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -94,6 +95,9 @@ public class AeropuertoTabbedWindow1Controller {
     private Button ValidacionBoton;
 
     @FXML
+    private Button DenegarBoton;
+
+    @FXML
     private TableView<Vuelo> ValidacionTabla;
 
     @FXML
@@ -136,6 +140,7 @@ public class AeropuertoTabbedWindow1Controller {
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
 
+        // Inicio de poblacion de tabla de vuelos a validar
         List<Vuelo> vuelos = repositoryVuelo.findAll();
 
         ObservableList<Vuelo> vuelosObservable = FXCollections.observableArrayList(vuelos);
@@ -143,8 +148,10 @@ public class AeropuertoTabbedWindow1Controller {
         ObservableList<Vuelo> vuelosEnTabla = FXCollections.observableArrayList();
 
         for (Vuelo vuelo : vuelosObservable) {
-            if (vuelo.getAeropuertoOrigen().equals(loggedUser.getCodigo()) || vuelo.getAeropuertoDestino().equals(loggedUser.getCodigo())) {
-                vuelosEnTabla.add(vuelo);
+            if ((vuelo.getAeropuertoOrigen().equals(loggedUser.getCodigo()) || vuelo.getAeropuertoDestino().equals(loggedUser.getCodigo())) && (!vuelo.getEstado().equals("11") && !vuelo.getEstado().equals("22"))) {
+                if (!(serviceVuelo.isOrigen(vuelo.getCodigoVuelo(), loggedUser.getCodigo()) && vuelo.getEstado().equals("10")) && !(!serviceVuelo.isOrigen(vuelo.getCodigoVuelo(), loggedUser.getCodigo()) && vuelo.getEstado().equals("01"))) {
+                    vuelosEnTabla.add(vuelo);
+                }
             }
         }
 
@@ -159,7 +166,9 @@ public class AeropuertoTabbedWindow1Controller {
         fechaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("fechaLlegada"));
         horaSalidaColumna.setCellValueFactory(new PropertyValueFactory("horaSalida"));
         horaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("horaLlegada"));
+        // Fin de poblacion de tabla de vuelos a validar
 
+        // Inicio de poblacion de combobox de aerolineas
         List<Aerolinea> aerolineas = repositoryAerolinea.findAll();
 
         aerolineasHabilitadasCombo.getItems().removeAll(aerolineasHabilitadasCombo.getItems());
@@ -171,6 +180,7 @@ public class AeropuertoTabbedWindow1Controller {
                 aerolineasHabilitadasCombo.getItems().add(aerolinea.getCodigoAerolinea());
             }
         }
+        // Fin de poblacion de combobox de aerolineas
     }
 
     @FXML
@@ -201,5 +211,19 @@ public class AeropuertoTabbedWindow1Controller {
         serviceAeropuerto.modificarPistas(loggedUser.getCodigo(), Integer.parseInt(PistaCapacidad.getText()));
         PistaCapacidad.clear();
         PistaCapacidad.requestFocus();
+    }
+
+    @FXML
+    void onValidarSeleccionButtonClick(ActionEvent event) {
+        UserSession loggedUser = UserSession.getInstance();
+        String vueloSeleccionado = ValidacionTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
+        
+        serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()));
+    }
+
+    @FXML
+    void onDenegarSeleccionButtonClick(ActionEvent event) {
+        String vueloSeleccionado = ValidacionTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
+        serviceVuelo.denegarVuelo(vueloSeleccionado);
     }
 }

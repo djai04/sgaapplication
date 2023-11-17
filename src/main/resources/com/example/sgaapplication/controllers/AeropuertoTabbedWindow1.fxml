@@ -65,7 +65,8 @@
                             <TableColumn fx:id="horaLlegadaColumna" prefWidth="90.0" text="Hora llegada" />
                           </columns>
                         </TableView>
-                        <Button fx:id="ValidacionBoton" layoutX="765.0" layoutY="280.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" text="Validar seleccionado" />
+                        <Button fx:id="DenegarBoton" layoutX="765.0" layoutY="230.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" text="Denegar seleccionado" onAction="#onDenegarSeleccionButtonClick" />
+                        <Button fx:id="ValidacionBoton" layoutX="765.0" layoutY="280.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" text="Validar seleccionado" onAction="#onValidarSeleccionButtonClick" />
                      </children></AnchorPane>
             </content>
           </Tab>

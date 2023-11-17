@@ -167,7 +167,7 @@ public class AerolineaTabbedWindow1Controller {
             System.out.println("Nice");
             System.out.println("------------------");
             serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().now().toString(), VueloFechaLlegada.getValue().now().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
-        }else {
+        } else {
             System.out.println("------------------");
             System.out.println("Error");
             System.out.println("------------------");

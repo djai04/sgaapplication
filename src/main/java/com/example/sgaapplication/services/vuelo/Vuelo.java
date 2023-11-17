@@ -28,4 +28,10 @@ public class Vuelo {
     private String fechaLlegada;
     private LocalTime horaSalida;
     private LocalTime horaLlegada;
+    private String estado;
+    // 00 = No aprobado por origen ni destino
+    // 10 = Aprobado por origen
+    // 01 = Aprobado por destino
+    // 11 = Aprobado por origen y por destino
+    // 22 = Denegado por origen o por destino
 }
