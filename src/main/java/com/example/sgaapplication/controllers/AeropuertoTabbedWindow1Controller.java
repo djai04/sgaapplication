@@ -154,6 +154,15 @@ public class AeropuertoTabbedWindow1Controller {
     }
 
     @FXML
+    private void showSuccess(String titulo, String header, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
 
@@ -217,22 +226,38 @@ public class AeropuertoTabbedWindow1Controller {
     void onHabilitarAerolineaButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
         serviceAeropuerto.asociarAeropuertoAerolinea(loggedUser.getCodigo(), aerolineasHabilitadasCombo.getValue());
+        showSuccess("Asociación correcta", "La asociación ha sido exitosa!", "La aerolinea ha sido asociada correctamente.");
     }
 
     @FXML
     void onModificarPuertasButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
-        serviceAeropuerto.modificarPuertas(loggedUser.getCodigo(), Integer.parseInt(PuertaCapacidad.getText()));
-        PuertaCapacidad.clear();
-        PuertaCapacidad.requestFocus();
+
+        try {
+            serviceAeropuerto.modificarPuertas(loggedUser.getCodigo(), Integer.parseInt(PuertaCapacidad.getText()));
+            showSuccess("Modificación correcta", "La modificación ha sido exitosa!", "La cantidad de puertas fue cambiada.");
+            PuertaCapacidad.clear();
+            PuertaCapacidad.requestFocus();
+        } catch (Exception e) {
+            // TODO: handle exception
+            showError("Error al modificar", "No se modificaron las puertas", "La cantidad de puertas debe ser un numero.");
+        }
     }
 
     @FXML
     void onModificarPistasButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
-        serviceAeropuerto.modificarPistas(loggedUser.getCodigo(), Integer.parseInt(PistaCapacidad.getText()));
-        PistaCapacidad.clear();
-        PistaCapacidad.requestFocus();
+
+        try {
+            serviceAeropuerto.modificarPistas(loggedUser.getCodigo(), Integer.parseInt(PistaCapacidad.getText()));
+            showSuccess("Modificación correcta", "La modificación ha sido exitosa!", "La cantidad de pistas fue cambiada.");
+            PistaCapacidad.clear();
+            PistaCapacidad.requestFocus();
+        } catch (Exception e) {
+            // TODO: handle exception
+            showError("Error al modificar", "No se modificaron las puertas", "La cantidad de puertas debe ser un numero.");
+
+        }
     }
 
     @FXML
@@ -242,6 +267,7 @@ public class AeropuertoTabbedWindow1Controller {
 
         if (serviceVuelo.validarPistasPuertas(loggedUser.getCodigo(), PistaAsignada.getText(), PuertaAsignada.getText(), serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()), vueloSeleccionado)) {
             serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()), PistaAsignada.getText(), PuertaAsignada.getText());
+            showSuccess("Validación correcta", "La validación ha sido exitosa!", "El vuelo fue validado por este aeropuerto.");
         } else {
             showError("Error al validar vuelo", "El vuelo no pudo ser validado!", "No está disponible esa pista o puerta.");
         }
@@ -251,5 +277,6 @@ public class AeropuertoTabbedWindow1Controller {
     void onDenegarSeleccionButtonClick(ActionEvent event) {
         String vueloSeleccionado = ValidacionTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
         serviceVuelo.denegarVuelo(vueloSeleccionado);
+        showSuccess("Denegación correcta", "La denegación ha sido exitosa!", "El vuelo fue denegado por este aeropuerto.");
     }
 }
