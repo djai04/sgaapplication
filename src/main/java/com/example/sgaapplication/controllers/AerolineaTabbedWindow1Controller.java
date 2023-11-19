@@ -125,6 +125,15 @@ public class AerolineaTabbedWindow1Controller {
     }
 
     @FXML
+    private void showSuccess(String titulo, String header, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
 
@@ -162,6 +171,7 @@ public class AerolineaTabbedWindow1Controller {
             AvionCapacidadCarga.clear();
             AvionMatricula.clear();
             AvionMatricula.requestFocus();
+            showSuccess("Alta de avion", "Alta de avion exitosa!", "El avion fue dado de alta correctamente.");
         } else {
             showError("Error alta avion", "Datos invalidos en alta avion", "Matricula: Un numero y 5 mayusculas.");
         }
@@ -177,6 +187,7 @@ public class AerolineaTabbedWindow1Controller {
         if (serviceVuelo.validarDatosVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue(), VueloFechaLlegada.getValue(), VueloHoraSalida.getText(), VueloHoraLlegada.getText())) {
             if (serviceVuelo.validarAvionEnUso(loggedUser.getCodigo(), VueloAvionCombo.getValue(), VueloHoraSalida.getText(), VueloHoraLlegada.getText(), VueloFechaSalida.getValue(), VueloFechaLlegada.getValue())) {
                 serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().toString(), VueloFechaLlegada.getValue().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
+                showSuccess("Alta vuelo avion", "Alta de vuelo exitosa!", "El vuelo fue dado de alta correctamente.");
             } else {
                 showError("Error alta vuelo", "No se pudo dar de alta el vuelo!", "El avión elegido está ocupado en ese horario..");
             }
