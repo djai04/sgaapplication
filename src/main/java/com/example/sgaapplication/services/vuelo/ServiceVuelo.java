@@ -30,7 +30,7 @@ public class ServiceVuelo {
     public void saveVuelo(String codigoVuelo, String aerolinea, String origen, String destino, String matriculaAvion, String fechaSalida, String fechaLlegada, LocalTime horaSalida, LocalTime horaLlegada) {
         Vuelo alreadyExists = repositoryVuelo.findByCodigoVuelo(codigoVuelo);
         if (alreadyExists == null) {
-            repositoryVuelo.save(new Vuelo(codigoVuelo, aerolinea, origen, destino, matriculaAvion, fechaSalida, fechaLlegada, horaSalida, horaLlegada, "00"));
+            repositoryVuelo.save(new Vuelo(codigoVuelo, aerolinea, origen, destino, matriculaAvion, fechaSalida, fechaLlegada, horaSalida, horaLlegada, "00", "0", "0", "0", "0"));
         }
     }
 
@@ -46,10 +46,12 @@ public class ServiceVuelo {
         
     }
 
-    public void validarVuelo(String codigoVuelo, boolean origen) {
+    public void validarVuelo(String codigoVuelo, boolean origen, String pista, String puerta) {
         Vuelo vuelo = repositoryVuelo.findByCodigoVuelo(codigoVuelo);
 
         if (origen) {
+            vuelo.setPistaOrigen(pista);
+            vuelo.setPuertaOrigen(puerta);
             if (vuelo.getEstado().equals("00")) {
                 vuelo.setEstado("10");
                 repositoryVuelo.save(vuelo);
@@ -58,6 +60,8 @@ public class ServiceVuelo {
                 repositoryVuelo.save(vuelo);
             }
         } else {
+            vuelo.setPistaDestino(pista);
+            vuelo.setPuertaDestino(puerta);
             if (vuelo.getEstado().equals("00")) {
                 vuelo.setEstado("01");
                 repositoryVuelo.save(vuelo);
@@ -182,7 +186,7 @@ public class ServiceVuelo {
         return true;
     }
 
-    public Boolean validarPistasPuertas(String codigoAeropuerto, String numeroPista, String numeroPuerta) {
+    public Boolean validarPistasPuertas(String codigoAeropuerto, String numeroPista, String numeroPuerta, boolean origen, String codigoVuelo) {
 
         try {
             int numeroPistaInt = Integer.parseInt(numeroPista);
@@ -197,12 +201,57 @@ public class ServiceVuelo {
             } else if (!(numeroPuertaInt >= 1 && numeroPuertaInt <= cantidadPuertas)) {
                 return false;
             }
-            
+
+            List<Vuelo> vuelosValidadosEnAeropuerto = getVuelosValidadosByAeropuerto(codigoAeropuerto);
+
+            for (Vuelo vueloValidado : vuelosValidadosEnAeropuerto) {
+                if (origen) {
+                    if (vueloValidado.getPistaOrigen().equals(numeroPista) && validarSiVuelosInterfieren(codigoVuelo, vueloValidado.getCodigoVuelo())) {
+                        return false;
+                    }
+
+                    if (vueloValidado.getPuertaOrigen().equals(numeroPuerta) && validarSiVuelosInterfieren(codigoVuelo, vueloValidado.getCodigoVuelo())) {
+                        return false;
+                    }
+                } else {
+                    if (vueloValidado.getPistaDestino().equals(numeroPista) && validarSiVuelosInterfieren(codigoVuelo, vueloValidado.getCodigoVuelo())) {
+                        return false;
+                    }
+
+                    if (vueloValidado.getPuertaDestino().equals(numeroPuerta) && validarSiVuelosInterfieren(codigoVuelo, vueloValidado.getCodigoVuelo())) {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
             return false;
         }
 
+    }
+
+    public Boolean validarSiVuelosInterfieren(String codigoVueloNuevo, String codigoVueloViejo) {
+        Vuelo vueloNuevo = repositoryVuelo.findByCodigoVuelo(codigoVueloNuevo);
+        Vuelo vueloViejo = repositoryVuelo.findByCodigoVuelo(codigoVueloViejo);
+
+        LocalTime horaSalidaVueloViejo = vueloViejo.getHoraSalida();
+        LocalTime horaLlegadaVueloViejo = vueloViejo.getHoraLlegada();
+        LocalDate fechaSalidaVueloViejo = dateParser(vueloViejo.getFechaSalida());
+        LocalDate fechaLlegadaVueloViejo = dateParser(vueloViejo.getFechaLlegada());
+        LocalDateTime fechaHoraSalidaVueloViejo = fechaSalidaVueloViejo.atTime(horaSalidaVueloViejo);
+        LocalDateTime fechaHoraLlegadaVueloViejo = fechaLlegadaVueloViejo.atTime(horaLlegadaVueloViejo);
+
+        LocalTime horaSalidaVueloNuevo = vueloNuevo.getHoraSalida();
+        LocalTime horaLlegadaVueloNuevo = vueloNuevo.getHoraLlegada();
+        LocalDate fechaSalidaVueloNuevo = dateParser(vueloNuevo.getFechaSalida());
+        LocalDate fechaLlegadaVueloNuevo = dateParser(vueloNuevo.getFechaLlegada());
+        LocalDateTime fechaHoraSalidaVueloNuevo = fechaSalidaVueloNuevo.atTime(horaSalidaVueloNuevo);
+        LocalDateTime fechaHoraLlegadaVueloNuevo = fechaLlegadaVueloNuevo.atTime(horaLlegadaVueloNuevo);
+
+        boolean terminaAntesEmpiece = fechaHoraLlegadaVueloNuevo.isBefore(fechaHoraSalidaVueloViejo);
+        boolean empiezaDespuesTermina = fechaHoraSalidaVueloNuevo.isAfter(fechaHoraLlegadaVueloViejo);
+
+        return !(terminaAntesEmpiece || empiezaDespuesTermina);
     }
 }

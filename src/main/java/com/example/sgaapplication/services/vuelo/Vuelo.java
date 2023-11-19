@@ -34,4 +34,10 @@ public class Vuelo {
     // 01 = Aprobado por destino
     // 11 = Aprobado por origen y por destino
     // 22 = Denegado por origen o por destino
+
+    private String pistaOrigen;
+    private String puertaOrigen;
+
+    private String pistaDestino;
+    private String puertaDestino;
 }

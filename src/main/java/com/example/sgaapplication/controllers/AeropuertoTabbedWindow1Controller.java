@@ -240,10 +240,10 @@ public class AeropuertoTabbedWindow1Controller {
         UserSession loggedUser = UserSession.getInstance();
         String vueloSeleccionado = ValidacionTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
 
-        if (serviceVuelo.validarPistasPuertas(loggedUser.getCodigo(), PistaAsignada.getText(), PuertaAsignada.getText())) {
-            serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()));
+        if (serviceVuelo.validarPistasPuertas(loggedUser.getCodigo(), PistaAsignada.getText(), PuertaAsignada.getText(), serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()), vueloSeleccionado)) {
+            serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()), PistaAsignada.getText(), PuertaAsignada.getText());
         } else {
-            showError("Error al validar vuelo", "El vuelo no pudo ser validado!", "La pista y puerta deben ser numeros y estar dentro de la capacidad.");
+            showError("Error al validar vuelo", "El vuelo no pudo ser validado!", "No está disponible esa pista o puerta.");
         }
     }
 

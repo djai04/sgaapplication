@@ -139,3 +139,7 @@ SET ESTADO = "00" [42122-214]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:1623)
+2023-11-19 15:17:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "DELETE FROM AVION WHERE AEROLINEA = ''[*]AA"
+Syntax error in SQL statement "DELETE FROM AVION WHERE AEROLINEA = ''[*]AA"; SQL statement:
+DELETE FROM AVION WHERE AEROLINEA = ''AA [42000-214]
