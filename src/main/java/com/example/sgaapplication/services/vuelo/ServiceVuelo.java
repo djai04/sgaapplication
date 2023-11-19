@@ -4,11 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.sgaapplication.persistency.RepositoryVuelo;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 @Service
 public class ServiceVuelo {
@@ -94,5 +99,80 @@ public class ServiceVuelo {
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    private LocalDate dateParser(String inputString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            return LocalDate.parse(inputString, formatter);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<Vuelo> getVuelosValidadosByAeropuerto(String codigoAeropuerto) {
+        List<Vuelo> vuelos = repositoryVuelo.findAll();
+
+        List<Vuelo> vuelosEnTabla = new ArrayList<>();
+
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getAeropuertoOrigen().equals(codigoAeropuerto) || vuelo.getAeropuertoDestino().equals(codigoAeropuerto)) {
+                if (vuelo.getEstado().equals("11")) {
+                    vuelosEnTabla.add(vuelo);
+                }
+            }
+        }
+
+        return vuelosEnTabla;
+    }
+
+    public List<Vuelo> getVuelosValidadosByAerolinea(String codigoAerolinea) {
+        List<Vuelo> vuelos = repositoryVuelo.findAll();
+
+        List<Vuelo> vuelosEnTabla = new ArrayList<>();
+
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getAerolinea().equals(codigoAerolinea)) {
+                if (vuelo.getEstado().equals("11")) {
+                    vuelosEnTabla.add(vuelo);
+                }
+            }
+        }
+
+        return vuelosEnTabla;
+    }
+
+    public Boolean validarAvionEnUso(String codigoAerolinea, String matricula, String horaSalida, String horaLlegada, LocalDate fechaSalida, LocalDate fechaLlegada) {
+        List<Vuelo> vuelosValidados = getVuelosValidadosByAerolinea(codigoAerolinea);
+
+        LocalTime horaSalidaTime = timeParser(horaSalida);
+        LocalTime horaLlegadaTime = timeParser(horaLlegada);
+        LocalDateTime dateTimeSalida = fechaSalida.atTime(horaSalidaTime);
+        LocalDateTime dateTimeLlegada = fechaLlegada.atTime(horaLlegadaTime);
+
+        for (Vuelo vueloValidado : vuelosValidados) {
+
+            if (!vueloValidado.getMatriculaAvion().equals(matricula)) {
+                continue;
+            }
+
+            LocalTime horaSalidaTimeValidada = vueloValidado.getHoraSalida();
+            LocalTime horaLlegadaTimeValidada = vueloValidado.getHoraLlegada();
+            
+            LocalDate fechaSalidaValidado = dateParser(vueloValidado.getFechaSalida());
+            LocalDate fechaLlegadaValidado = dateParser(vueloValidado.getFechaLlegada());
+
+            LocalDateTime dateTimeSalidaValidado = fechaSalidaValidado.atTime(horaSalidaTimeValidada);
+            LocalDateTime dateTimeLlegadaValidado = fechaLlegadaValidado.atTime(horaLlegadaTimeValidada);
+
+            boolean terminaAntesEmpiece = dateTimeLlegada.isBefore(dateTimeSalidaValidado);
+            boolean empiezaDespuesTermina = dateTimeSalida.isAfter(dateTimeLlegadaValidado);
+
+            if (!(empiezaDespuesTermina || terminaAntesEmpiece)) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

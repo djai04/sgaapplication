@@ -21,6 +21,7 @@ import com.example.sgaapplication.services.avion.Avion;
 import com.example.sgaapplication.services.avion.ServiceAvion;
 import com.example.sgaapplication.services.boleto.ServiceBoleto;
 import com.example.sgaapplication.services.vuelo.ServiceVuelo;
+import com.example.sgaapplication.services.vuelo.Vuelo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -126,6 +127,7 @@ public class AerolineaTabbedWindow1Controller {
     @FXML
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
+
         List<Aeropuerto> aeropuertos = repositoryAeropuerto.findAll();
         VueloOrigenCombo.getItems().removeAll(VueloOrigenCombo.getItems());
         VueloDestinoCombo.getItems().removeAll(VueloDestinoCombo.getItems());
@@ -173,21 +175,14 @@ public class AerolineaTabbedWindow1Controller {
         String flightCode = loggedUser.getCodigo() + VueloAvionCombo.getValue() + VueloHoraSalida.getText();
 
         if (serviceVuelo.validarDatosVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue(), VueloFechaLlegada.getValue(), VueloHoraSalida.getText(), VueloHoraLlegada.getText())) {
-            serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().toString(), VueloFechaLlegada.getValue().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
+            if (serviceVuelo.validarAvionEnUso(loggedUser.getCodigo(), VueloAvionCombo.getValue(), VueloHoraSalida.getText(), VueloHoraLlegada.getText(), VueloFechaSalida.getValue(), VueloFechaLlegada.getValue())) {
+                serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().toString(), VueloFechaLlegada.getValue().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
+            } else {
+                showError("Error alta vuelo", "No se pudo dar de alta el vuelo!", "El avión elegido está ocupado en ese horario..");
+            }
         } else {
             showError("Error alta vuelo", "No se pudo dar de alta el vuelo!", "Alguna de los datos tiene un formato erroneo.");
         }
-
-        /** if ((VueloFechaLlegada.getValue().isAfter(VueloFechaSalida.getValue()) || VueloFechaLlegada.getValue().isEqual(VueloFechaSalida.getValue())) && timeParser(VueloHoraLlegada.getText()) != null && timeParser(VueloHoraSalida.getText()) != null) {
-            System.out.println("------------------");
-            System.out.println("Nice");
-            System.out.println("------------------");
-            serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().toString(), VueloFechaLlegada.getValue().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
-        } else {
-            System.out.println("------------------");
-            System.out.println("Error");
-            System.out.println("------------------");
-        } **/
 
         VueloHoraLlegada.clear();
         VueloHoraSalida.clear();
