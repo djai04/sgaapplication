@@ -1,6 +1,9 @@
 package com.example.sgaapplication.services.vuelo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +61,38 @@ public class ServiceVuelo {
         Vuelo vuelo = repositoryVuelo.findByCodigoVuelo(codigoVuelo);
         vuelo.setEstado("22");
         repositoryVuelo.save(vuelo);
+    }
+
+    public boolean validarDatosVuelo(String codigoVuelo, String codigoAerolinea, String origen, String destino, String matricula, LocalDate fechaSalida, LocalDate fechaLlegada, String horaSalida, String horaLlegada) {
+
+        if (!(fechaLlegada.isAfter(fechaSalida) || fechaLlegada.isEqual(fechaSalida))) {
+            return false;
+        } else if (timeParser(horaLlegada) == null || timeParser(horaSalida) == null) {
+            return false;
+        } else if (!(fechaSalida.isAfter(LocalDate.now()))) {
+            return false;
+        } else if (origen.equals(destino)) {
+            return false;
+        }
+
+        LocalTime horaSalidaTime = timeParser(horaSalida);
+        LocalTime horaLlegadaTime = timeParser(horaLlegada);
+        LocalDateTime dateTimeSalida = fechaSalida.atTime(horaSalidaTime);
+        LocalDateTime dateTimeLlegada = fechaLlegada.atTime(horaLlegadaTime);
+
+        if (dateTimeSalida.isAfter(dateTimeLlegada)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private LocalTime timeParser(String inputString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        try {
+            return LocalTime.parse(inputString, formatter);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

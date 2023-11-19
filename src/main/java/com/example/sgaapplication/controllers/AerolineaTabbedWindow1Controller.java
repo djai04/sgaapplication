@@ -172,16 +172,22 @@ public class AerolineaTabbedWindow1Controller {
 
         String flightCode = loggedUser.getCodigo() + VueloAvionCombo.getValue() + VueloHoraSalida.getText();
 
-        if ((VueloFechaLlegada.getValue().isAfter(VueloFechaSalida.getValue()) || VueloFechaLlegada.getValue().isEqual(VueloFechaSalida.getValue())) && timeParser(VueloHoraLlegada.getText()) != null && timeParser(VueloHoraSalida.getText()) != null) {
+        if (serviceVuelo.validarDatosVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue(), VueloFechaLlegada.getValue(), VueloHoraSalida.getText(), VueloHoraLlegada.getText())) {
+            serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().toString(), VueloFechaLlegada.getValue().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
+        } else {
+            showError("Error alta vuelo", "No se pudo dar de alta el vuelo!", "Alguna de los datos tiene un formato erroneo.");
+        }
+
+        /** if ((VueloFechaLlegada.getValue().isAfter(VueloFechaSalida.getValue()) || VueloFechaLlegada.getValue().isEqual(VueloFechaSalida.getValue())) && timeParser(VueloHoraLlegada.getText()) != null && timeParser(VueloHoraSalida.getText()) != null) {
             System.out.println("------------------");
             System.out.println("Nice");
             System.out.println("------------------");
-            serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().now().toString(), VueloFechaLlegada.getValue().now().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
+            serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().toString(), VueloFechaLlegada.getValue().toString(), timeParser(VueloHoraSalida.getText()), timeParser(VueloHoraLlegada.getText()));
         } else {
             System.out.println("------------------");
             System.out.println("Error");
             System.out.println("------------------");
-        }
+        } **/
 
         VueloHoraLlegada.clear();
         VueloHoraSalida.clear();
