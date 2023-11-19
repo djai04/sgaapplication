@@ -15,6 +15,7 @@ import com.example.sgaapplication.persistency.RepositoryVuelo;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 
+import jakarta.transaction.Transactional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -254,4 +255,5 @@ public class ServiceVuelo {
 
         return !(terminaAntesEmpiece || empiezaDespuesTermina);
     }
+
 }

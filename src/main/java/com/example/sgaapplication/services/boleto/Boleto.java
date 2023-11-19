@@ -1,7 +1,9 @@
 package com.example.sgaapplication.services.boleto;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,27 +18,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Boleto {
     @Id
+    private String identificador;
+
     private String codigo;
     private String pasaporte;
-
-    /**public Boleto(String codigo, String pasaporte) {
-        this.codigo = codigo;
-        this.pasaporte = pasaporte;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getPasaporte() {
-        return pasaporte;
-    }
-
-    public void setPasaporte(String pasaporte) {
-        this.pasaporte = pasaporte;
-    }**/
 }

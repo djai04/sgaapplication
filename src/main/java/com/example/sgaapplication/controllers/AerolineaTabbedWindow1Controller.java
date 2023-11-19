@@ -110,7 +110,7 @@ public class AerolineaTabbedWindow1Controller {
     private Button agregarBoletoButton;
 
     @FXML
-    private TextField codigoTextField;
+    private ComboBox<String> codigoCombo;
 
     @FXML
     private TextField pasaporteTextField;
@@ -158,6 +158,15 @@ public class AerolineaTabbedWindow1Controller {
             if (avion.getAerolinea().equals(loggedUser.getCodigo())) {
                 VueloAvionCombo.getItems().add(avion.getMatricula());
             }
+        }
+
+        // Inicio población combobox boleto
+
+        List<Vuelo> vuelosEnAerolinea = serviceVuelo.getVuelosValidadosByAerolinea(loggedUser.getCodigo());
+        codigoCombo.getItems().removeAll(codigoCombo.getItems());
+
+        for (Vuelo vuelo : vuelosEnAerolinea) {
+            codigoCombo.getItems().add(vuelo.getCodigoVuelo());
         }
     }
 
@@ -218,15 +227,12 @@ public class AerolineaTabbedWindow1Controller {
 
     @FXML
     void onAgregarBoletoButtonClick() {
-        String codigo = codigoTextField.getText();
+        String codigo = codigoCombo.getValue();
         String pasaporte = pasaporteTextField.getText();
-
         serviceBoleto.saveBoleto(codigo, pasaporte);
 
-        codigoTextField.clear();
         pasaporteTextField.clear();
-
-        codigoTextField.requestFocus();
+        pasaporteTextField.requestFocus();
     }
 
 }

@@ -12,9 +12,11 @@ public class ServiceBoleto {
     RepositoryBoleto boletoRepository;
 
     public void saveBoleto(String codigo, String pasaporte) {
-        Boleto alreadyExists = boletoRepository.findByCodigo(codigo);
+
+        String identificadorBoleto = codigo + pasaporte;
+        Boleto alreadyExists = boletoRepository.findByIdentificador(identificadorBoleto);
         if (alreadyExists == null) {
-            boletoRepository.save(new Boleto(codigo, pasaporte));
+            boletoRepository.save(new Boleto(identificadorBoleto, codigo, pasaporte));
         }
     }
 

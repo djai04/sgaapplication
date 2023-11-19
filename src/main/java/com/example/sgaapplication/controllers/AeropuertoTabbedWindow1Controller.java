@@ -192,7 +192,6 @@ public class AeropuertoTabbedWindow1Controller {
     @FXML
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
-
         // Inicio de poblacion de tabla de vuelos a validar
         List<Vuelo> vuelos = repositoryVuelo.findAll();
 

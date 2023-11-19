@@ -1,7 +1,9 @@
 package com.example.sgaapplication.services.vuelo;
 
 import java.time.LocalTime;
+import java.util.List;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -28,6 +30,7 @@ public class Vuelo {
     private String fechaLlegada;
     private LocalTime horaSalida;
     private LocalTime horaLlegada;
+
     private String estado;
     // 00 = No aprobado por origen ni destino
     // 10 = Aprobado por origen

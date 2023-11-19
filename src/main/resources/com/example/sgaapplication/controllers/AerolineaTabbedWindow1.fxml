@@ -58,7 +58,7 @@
                   <Button fx:id="agregarBoletoButton" layoutX="271.0" layoutY="276.0" mnemonicParsing="false" text="Agregar Boleto" onAction="#onAgregarBoletoButtonClick" />
                   <Text layoutX="116.0" layoutY="143.0" text="Codigo" />
                   <Text layoutX="116.0" layoutY="200.0" text="Pasaporte" />
-                  <TextField fx:id="codigoTextField" layoutX="245.0" layoutY="130.0" />
+                  <ComboBox fx:id="codigoCombo" layoutX="245.0" layoutY="130.0" />
                   <TextField fx:id="pasaporteTextField" layoutX="245.0" layoutY="187.0" />
                 </children>
               </AnchorPane>
