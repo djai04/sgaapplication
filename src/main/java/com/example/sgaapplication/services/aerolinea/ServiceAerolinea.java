@@ -20,4 +20,17 @@ public class ServiceAerolinea {
 
         return repositoryAerolinea.save(aerolinea);
     }
+
+    public boolean validarDatosAerolinea(String codigo, String nombre, String pais) {
+
+        if (!codigo.matches("[A-Z]{2}")) {
+            return false;
+        } else if (!(nombre.matches("[a-zA-Z ]+") && nombre.length() < 30)) {
+            return false;
+        } else if (!(pais.matches("[a-zA-Z ]+") && pais.length() < 30)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

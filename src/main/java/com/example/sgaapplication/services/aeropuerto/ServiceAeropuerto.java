@@ -75,5 +75,20 @@ public class ServiceAeropuerto {
         esteAeropuerto.setCapacidadEstacionamiento(capacidadPistas);
         repositoryAeropuerto.save(esteAeropuerto);
     }
+
+    public boolean validarDatosAeropuerto(String codigo, String nombre, String pais, String ciudad) {
+
+        if (!codigo.matches("[A-Z]{3}")) {
+            return false;
+        } else if (!(nombre.matches("[a-zA-Z ]+") && nombre.length() < 30)) {
+            return false;
+        } else if (!(pais.matches("[a-zA-Z ]+") && pais.length() < 30)) {
+            return false;
+        } else if (!(ciudad.matches("[a-zA-Z ]+") && ciudad.length() < 30)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     
 }
