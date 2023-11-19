@@ -10,7 +10,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 import com.example.sgaapplication.persistency.RepositoryVuelo;
+import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
+import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +23,9 @@ public class ServiceVuelo {
 
     @Autowired
     private RepositoryVuelo repositoryVuelo;
+
+    @Autowired
+    private RepositoryAeropuerto repositoryAeropuerto;
 
     public void saveVuelo(String codigoVuelo, String aerolinea, String origen, String destino, String matriculaAvion, String fechaSalida, String fechaLlegada, LocalTime horaSalida, LocalTime horaLlegada) {
         Vuelo alreadyExists = repositoryVuelo.findByCodigoVuelo(codigoVuelo);
@@ -174,5 +180,29 @@ public class ServiceVuelo {
         }
         
         return true;
+    }
+
+    public Boolean validarPistasPuertas(String codigoAeropuerto, String numeroPista, String numeroPuerta) {
+
+        try {
+            int numeroPistaInt = Integer.parseInt(numeroPista);
+            int numeroPuertaInt = Integer.parseInt(numeroPuerta);
+
+            Aeropuerto esteAeropuerto = repositoryAeropuerto.findByCodigoAeropuerto(codigoAeropuerto);
+            int cantidadPistas = esteAeropuerto.getCapacidadEstacionamiento();
+            int cantidadPuertas = esteAeropuerto.getCapacidadPuertas();
+
+            if (!(numeroPistaInt >= 1 && numeroPistaInt <= cantidadPistas)) {
+                return false;
+            } else if (!(numeroPuertaInt >= 1 && numeroPuertaInt <= cantidadPuertas)) {
+                return false;
+            }
+            
+            return true;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return false;
+        }
+
     }
 }

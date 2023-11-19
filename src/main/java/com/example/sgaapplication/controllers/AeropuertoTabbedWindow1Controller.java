@@ -27,6 +27,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -137,6 +139,21 @@ public class AeropuertoTabbedWindow1Controller {
     private TextField PistaCapacidad;
 
     @FXML
+    private TextField PistaAsignada;
+
+    @FXML
+    private TextField PuertaAsignada;
+
+    @FXML
+    private void showError(String titulo, String header, String content) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
     public void initialize() {
         UserSession loggedUser = UserSession.getInstance();
 
@@ -181,6 +198,11 @@ public class AeropuertoTabbedWindow1Controller {
             }
         }
         // Fin de poblacion de combobox de aerolineas
+
+        // Inicio placeholder
+        PuertaAsignada.setPromptText("Puerta");
+        PistaAsignada.setPromptText("Pista");
+        // Final placeholder
     }
 
     @FXML
@@ -217,8 +239,12 @@ public class AeropuertoTabbedWindow1Controller {
     void onValidarSeleccionButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
         String vueloSeleccionado = ValidacionTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
-        
-        serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()));
+
+        if (serviceVuelo.validarPistasPuertas(loggedUser.getCodigo(), PistaAsignada.getText(), PuertaAsignada.getText())) {
+            serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()));
+        } else {
+            showError("Error al validar vuelo", "El vuelo no pudo ser validado!", "La pista y puerta deben ser numeros y estar dentro de la capacidad.");
+        }
     }
 
     @FXML
