@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 import com.example.sgaapplication.persistency.RepositoryAvion;
@@ -14,6 +15,7 @@ import com.example.sgaapplication.persistency.RepositoryBoleto;
 import com.example.sgaapplication.persistency.RepositoryVuelo;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
+import com.example.sgaapplication.services.aerolinea.Aerolinea;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 import com.example.sgaapplication.services.avion.Avion;
 import com.example.sgaapplication.services.avion.ServiceAvion;
@@ -119,8 +121,13 @@ public class AerolineaTabbedWindow1Controller {
         VueloDestinoCombo.getItems().removeAll(VueloDestinoCombo.getItems());
         
         for (Aeropuerto aeropuerto : aeropuertos) {
-            VueloOrigenCombo.getItems().add(aeropuerto.getCodigoAeropuerto());
-            VueloDestinoCombo.getItems().add(aeropuerto.getCodigoAeropuerto());
+            List<String> aerolineasEnAeropuerto = serviceAeropuerto.getAerolineasAsociadas(aeropuerto.getCodigoAeropuerto());
+
+            if (aerolineasEnAeropuerto.contains(loggedUser.getCodigo())) {
+                VueloOrigenCombo.getItems().add(aeropuerto.getCodigoAeropuerto());
+                VueloDestinoCombo.getItems().add(aeropuerto.getCodigoAeropuerto());
+            }
+
         }
 
         List<Avion> aviones = repositoryAvion.findAll();

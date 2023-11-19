@@ -56,6 +56,14 @@ public class ServiceAeropuerto {
         return codigosAerolineasYaHabilitadas;
     }
 
+    @Transactional
+    public List<Aerolinea> getAerolineasAsociadasAsAerolineas(String codigoAeropuerto) {
+        Aeropuerto esteAeropuerto = repositoryAeropuerto.findByCodigoAeropuerto(codigoAeropuerto);
+        List<Aerolinea> aerolineasYaHabilitadas = esteAeropuerto.getAerolineasHabilitadas();
+
+        return aerolineasYaHabilitadas;
+    }
+
     public void modificarPuertas(String codigoAeropuerto, int capacidadPuertas) {
         Aeropuerto esteAeropuerto = repositoryAeropuerto.findByCodigoAeropuerto(codigoAeropuerto);
         esteAeropuerto.setCapacidadPuertas(capacidadPuertas);
