@@ -9,12 +9,13 @@ import com.example.sgaapplication.persistency.RepositoryAeropuerto;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
-import com.example.sgaapplication.services.cliente.ServiceCliente;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -61,6 +62,15 @@ public class Login2Controller {
     private ComboBox<String> typeInput;
 
     @FXML
+    private void showError(String titulo, String header, String content) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
     public void initialize() {
         typeInput.getItems().removeAll(typeInput.getItems());
         typeInput.setValue("Aeropuerto");
@@ -85,9 +95,11 @@ public class Login2Controller {
                     scene.setRoot(root);
                 } else {
                     System.out.println("Contraseña incorrecta");
+                    showError("Error en el login", "Contraseña incorrecta!", "La contraseña ingresada no corresponde a ningun aeropuerto.");
                 }
             } else {
                 System.out.println("No existe aeropuerto.");
+                showError("Error en el login", "Usuario no existe!", "No existe ningun aeropuerto con ese codigo.");
             }
         } else if (typeInput.getValue().equals("Aerolinea")) {
             if (repositoryAerolinea.existsById(usernameInput.getText())) {
@@ -100,12 +112,15 @@ public class Login2Controller {
                     scene.setRoot(root);
                 } else {
                     System.out.println("Contraseña incorrecta");
+                    showError("Error en el login", "Contraseña incorrecta!", "La contraseña ingresada no corresponde a ninguna aerolinea.");
                 }
             } else {
                 System.out.println("No existe aeropuerto.");
+                showError("Error en el login", "Usuario no existe!", "No existe ninguna aerolinea con ese codigo.");
             }
         } else {
             System.out.println("Login fallado");
+            showError("Error en el login", "Error inesperado", "Hubo un error inesperado al intentar iniciar sesión.");
         }
     }
 }
