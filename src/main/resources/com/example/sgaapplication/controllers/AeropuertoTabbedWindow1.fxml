@@ -76,9 +76,17 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="ConsultaTabla" layoutX="38.0" layoutY="29.0" prefHeight="200.0" prefWidth="153.0">
+                        <TableView fx:id="ConsultaTabla" layoutX="14.0" layoutY="14.0" prefHeight="311.0" prefWidth="739.0">
                           <columns>
-                            <TableColumn prefWidth="151.20001792907715" text="Codigo de Vuelo validado" />
+                            <TableColumn fx:id="aerolineaColumnaConsulta" prefWidth="75.0" text="Aerolinea" />
+                            <TableColumn fx:id="codigoColumnaConsulta" prefWidth="75.0" text="Codigo" />
+                            <TableColumn fx:id="matriculaColumnaConsulta" prefWidth="75.0" text="Matricula" />
+                            <TableColumn fx:id="origenColumnaConsulta" prefWidth="75.0" text="Origen" />
+                            <TableColumn fx:id="destinoColumnaConsulta" prefWidth="75.0" text="Destino" />
+                            <TableColumn fx:id="fechaSalidaColumnaConsulta" prefWidth="90.0" text="Fecha salida" />
+                            <TableColumn fx:id="fechaLlegadaColumnaConsulta" prefWidth="90.0" text="Fecha llegada" />
+                            <TableColumn fx:id="horaSalidaColumnaConsulta" prefWidth="90.0" text="Hora salida" />
+                            <TableColumn fx:id="horaLlegadaColumnaConsulta" prefWidth="90.0" text="Hora llegada" />
                           </columns>
                         </TableView>
                      </children>

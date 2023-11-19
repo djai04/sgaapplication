@@ -70,9 +70,6 @@ public class AeropuertoTabbedWindow1Controller {
     ServiceAeropuerto serviceAeropuerto;
 
     @FXML
-    private TableView<?> ConsultaTabla;
-
-    @FXML
     private ToggleButton FuncionarioAlta;
 
     @FXML
@@ -128,6 +125,36 @@ public class AeropuertoTabbedWindow1Controller {
 
     @FXML
     private TableColumn<Vuelo, String> horaLlegadaColumna;
+
+    @FXML
+    private TableView<Vuelo> ConsultaTabla;
+
+    @FXML
+    private TableColumn<Vuelo, String> aerolineaColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> codigoColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> matriculaColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> origenColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> destinoColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> fechaSalidaColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> fechaLlegadaColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> horaSalidaColumnaConsulta;
+
+    @FXML
+    private TableColumn<Vuelo, String> horaLlegadaColumnaConsulta;
 
     @FXML
     private ComboBox<String> aerolineasHabilitadasCombo;
@@ -193,6 +220,32 @@ public class AeropuertoTabbedWindow1Controller {
         horaSalidaColumna.setCellValueFactory(new PropertyValueFactory("horaSalida"));
         horaLlegadaColumna.setCellValueFactory(new PropertyValueFactory("horaLlegada"));
         // Fin de poblacion de tabla de vuelos a validar
+
+        // Inicio de poblacion de tabla de vuelos confirmados
+        List<Vuelo> vuelosConfirmados = repositoryVuelo.findAll();
+
+        ObservableList<Vuelo> vuelosObservableConfirmados = FXCollections.observableArrayList(vuelos);
+
+        ObservableList<Vuelo> vuelosEnTablaConfirmados = FXCollections.observableArrayList();
+
+        for (Vuelo vuelo : vuelosObservableConfirmados) {
+            if ((vuelo.getAeropuertoOrigen().equals(loggedUser.getCodigo()) || vuelo.getAeropuertoDestino().equals(loggedUser.getCodigo())) && vuelo.getEstado().equals("11")) {
+                vuelosEnTablaConfirmados.add(vuelo);
+            }
+        }
+
+        ConsultaTabla.setItems(vuelosEnTablaConfirmados);
+
+        aerolineaColumnaConsulta.setCellValueFactory(new PropertyValueFactory("aerolinea"));
+        codigoColumnaConsulta.setCellValueFactory(new PropertyValueFactory("codigoVuelo"));
+        matriculaColumnaConsulta.setCellValueFactory(new PropertyValueFactory("matriculaAvion"));
+        origenColumnaConsulta.setCellValueFactory(new PropertyValueFactory("aeropuertoOrigen"));
+        destinoColumnaConsulta.setCellValueFactory(new PropertyValueFactory("aeropuertoDestino"));
+        fechaSalidaColumnaConsulta.setCellValueFactory(new PropertyValueFactory("fechaSalida"));
+        fechaLlegadaColumnaConsulta.setCellValueFactory(new PropertyValueFactory("fechaLlegada"));
+        horaSalidaColumnaConsulta.setCellValueFactory(new PropertyValueFactory("horaSalida"));
+        horaLlegadaColumnaConsulta.setCellValueFactory(new PropertyValueFactory("horaLlegada"));
+        // Fin de poblacion de tabla de vuelos confirmados
 
         // Inicio de poblacion de combobox de aerolineas
         List<Aerolinea> aerolineas = repositoryAerolinea.findAll();
