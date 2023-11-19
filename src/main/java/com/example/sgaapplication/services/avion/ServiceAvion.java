@@ -19,4 +19,26 @@ public class ServiceAvion {
         }
     }
 
+    public boolean validarDatosAvion(String matricula, String capacidadAsientos, String capacidadCarga) {
+
+        try {
+            if (!(matricula.matches("[A-Z]\\d{5}"))) {
+                System.out.println("Matricula");
+                return false;
+            } else if (!(Integer.parseInt(capacidadAsientos) > 1)) {
+                System.out.println("Asientos");
+                return false;
+            } else if (!(Integer.parseInt(capacidadCarga) > 1)) {
+                System.out.println("Carga");
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("Exception");
+            return false;
+        }
+    }
+
 }

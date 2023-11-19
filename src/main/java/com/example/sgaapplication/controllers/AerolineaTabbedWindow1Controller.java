@@ -26,6 +26,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -112,6 +114,14 @@ public class AerolineaTabbedWindow1Controller {
     @FXML
     private TextField pasaporteTextField;
 
+    @FXML
+    private void showError(String titulo, String header, String content) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     @FXML
     public void initialize() {
@@ -143,25 +153,18 @@ public class AerolineaTabbedWindow1Controller {
     @FXML
     void onAddAvionButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
-        System.out.println(loggedUser.getCodigo());
-        serviceAvion.saveAvion(AvionMatricula.getText(), AvionCapacidadCarga.getText(), AvionCapacidadAsientos.getText(), loggedUser.getCodigo());
-        AvionCapacidadAsientos.clear();
-        AvionCapacidadCarga.clear();
-        AvionMatricula.clear();
-        AvionMatricula.requestFocus();
+
+        if (serviceAvion.validarDatosAvion(AvionMatricula.getText(), AvionCapacidadAsientos.getText(), AvionCapacidadCarga.getText())) {
+            serviceAvion.saveAvion(AvionMatricula.getText(), AvionCapacidadCarga.getText(), AvionCapacidadAsientos.getText(), loggedUser.getCodigo());
+            AvionCapacidadAsientos.clear();
+            AvionCapacidadCarga.clear();
+            AvionMatricula.clear();
+            AvionMatricula.requestFocus();
+        } else {
+            showError("Error alta avion", "Datos invalidos en alta avion", "Matricula: Un numero y 5 mayusculas.");
+        }
+
     }
-
-    /**@FXML
-    void onAddVueloButtonClick(ActionEvent event) {
-        UserSession loggedUser = UserSession.getInstance();
-
-        String flightCode = loggedUser.getCodigo() + VueloAvionCombo.getValue() + VueloHoraSalida.getText();
-
-        serviceVuelo.saveVuelo(flightCode, loggedUser.getCodigo(), VueloOrigenCombo.getValue(), VueloDestinoCombo.getValue(), VueloAvionCombo.getValue(), VueloFechaSalida.getValue().now().toString(), VueloFechaLlegada.getValue().now().toString(), VueloHoraSalida.getText(), VueloHoraLlegada.getText());
-
-        VueloHoraLlegada.clear();
-        VueloHoraSalida.clear();
-    }**/
 
     @FXML
     void onAddVueloButtonClick(ActionEvent event) {

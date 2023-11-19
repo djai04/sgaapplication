@@ -12,20 +12,6 @@
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" 
   fx:controller="com.example.sgaapplication.controllers.AerolineaTabbedWindow1Controller">
   <tabs>
-    <Tab text="Alta Avión">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Text layoutX="86.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matricula:" />
-                  <Text layoutX="48.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad carga:" />
-                  <Text layoutX="34.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad asientos:" />
-                  <TextField fx:id="AvionMatricula" layoutX="163.0" layoutY="73.0" />
-                  <TextField fx:id="AvionCapacidadCarga" layoutX="163.0" layoutY="123.0" />
-                  <TextField fx:id="AvionCapacidadAsientos" layoutX="163.0" layoutY="172.0" />
-                  <Button fx:id="AvionAlta" layoutX="163.0" layoutY="229.0" mnemonicParsing="false" text="Dar de alta" onAction="#onAddAvionButtonClick"/>
-               </children></AnchorPane>
-      </content>
-    </Tab>
       <Tab text="Alta Vuelo">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -49,6 +35,21 @@
             </AnchorPane>
         </content>
       </Tab>
+
+      <Tab text="Alta Avión">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="86.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matricula:" />
+                  <Text layoutX="48.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad carga:" />
+                  <Text layoutX="34.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad asientos:" />
+                  <TextField fx:id="AvionMatricula" layoutX="163.0" layoutY="73.0" />
+                  <TextField fx:id="AvionCapacidadCarga" layoutX="163.0" layoutY="123.0" />
+                  <TextField fx:id="AvionCapacidadAsientos" layoutX="163.0" layoutY="172.0" />
+                  <Button fx:id="AvionAlta" layoutX="163.0" layoutY="229.0" mnemonicParsing="false" text="Dar de alta" onAction="#onAddAvionButtonClick"/>
+               </children></AnchorPane>
+      </content>
+    </Tab>
 
       <Tab text="Boletos">
         <content>
