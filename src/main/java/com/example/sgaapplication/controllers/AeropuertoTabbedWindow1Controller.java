@@ -1,5 +1,6 @@
 package com.example.sgaapplication.controllers;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -325,10 +326,20 @@ public class AeropuertoTabbedWindow1Controller {
     void onValidarSeleccionButtonClick(ActionEvent event) {
         UserSession loggedUser = UserSession.getInstance();
         String vueloSeleccionado = ValidacionTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
+        String matricula = ValidacionTabla.getSelectionModel().getSelectedItem().getMatriculaAvion();
+        LocalTime horaSalida = ValidacionTabla.getSelectionModel().getSelectedItem().getHoraSalida();
+        LocalTime horaLlegada = ValidacionTabla.getSelectionModel().getSelectedItem().getHoraLlegada();
+        String fechaSalida = ValidacionTabla.getSelectionModel().getSelectedItem().getFechaSalida();
+        String fechaLlegada = ValidacionTabla.getSelectionModel().getSelectedItem().getFechaLlegada();
 
         if (serviceVuelo.validarPistasPuertas(loggedUser.getCodigo(), PistaAsignada.getText(), PuertaAsignada.getText(), serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()), vueloSeleccionado)) {
-            serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()), PistaAsignada.getText(), PuertaAsignada.getText());
-            showSuccess("Validación correcta", "La validación ha sido exitosa!", "El vuelo fue validado por este aeropuerto.");
+            if (serviceVuelo.validarAvionEnUsoAeropuerto(loggedUser.getCodigo(), matricula, horaSalida, horaLlegada, fechaSalida, fechaLlegada)) {
+                serviceVuelo.validarVuelo(vueloSeleccionado, serviceVuelo.isOrigen(vueloSeleccionado, loggedUser.getCodigo()), PistaAsignada.getText(), PuertaAsignada.getText());
+                showSuccess("Validación correcta", "La validación ha sido exitosa!", "El vuelo fue validado por este aeropuerto.");
+            } else {
+                showError("Error al validar vuelo", "El vuelo no pudo ser validado!", "No está disponible ese avion.");
+            }
+            
         } else {
             showError("Error al validar vuelo", "El vuelo no pudo ser validado!", "No está disponible esa pista o puerta.");
         }

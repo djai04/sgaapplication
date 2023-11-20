@@ -187,6 +187,40 @@ public class ServiceVuelo {
         return true;
     }
 
+    public Boolean validarAvionEnUsoAeropuerto(String codigoAeropuerto, String matricula, LocalTime horaSalidaTime, LocalTime horaLlegadaTime, String fechaSalida, String fechaLlegada) {
+        List<Vuelo> vuelosValidados = getVuelosValidadosByAeropuerto(codigoAeropuerto);
+
+        LocalDate fechaSalidaDate = dateParser(fechaSalida);
+        LocalDate fechaLlegadaDate = dateParser(fechaLlegada);
+        LocalDateTime dateTimeSalida = fechaSalidaDate.atTime(horaSalidaTime);
+        LocalDateTime dateTimeLlegada = fechaLlegadaDate.atTime(horaLlegadaTime);
+
+        for (Vuelo vueloValidado : vuelosValidados) {
+
+            if (!vueloValidado.getMatriculaAvion().equals(matricula)) {
+                continue;
+            }
+
+            LocalTime horaSalidaTimeValidada = vueloValidado.getHoraSalida();
+            LocalTime horaLlegadaTimeValidada = vueloValidado.getHoraLlegada();
+            
+            LocalDate fechaSalidaValidado = dateParser(vueloValidado.getFechaSalida());
+            LocalDate fechaLlegadaValidado = dateParser(vueloValidado.getFechaLlegada());
+
+            LocalDateTime dateTimeSalidaValidado = fechaSalidaValidado.atTime(horaSalidaTimeValidada);
+            LocalDateTime dateTimeLlegadaValidado = fechaLlegadaValidado.atTime(horaLlegadaTimeValidada);
+
+            boolean terminaAntesEmpiece = dateTimeLlegada.isBefore(dateTimeSalidaValidado);
+            boolean empiezaDespuesTermina = dateTimeSalida.isAfter(dateTimeLlegadaValidado);
+
+            if (!(empiezaDespuesTermina || terminaAntesEmpiece)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
     public Boolean validarPistasPuertas(String codigoAeropuerto, String numeroPista, String numeroPuerta, boolean origen, String codigoVuelo) {
 
         try {
