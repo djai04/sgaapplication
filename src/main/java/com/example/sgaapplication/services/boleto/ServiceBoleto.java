@@ -24,4 +24,8 @@ public class ServiceBoleto {
 
     }
 
+    public boolean validarPasaporte(String pasaporte) {
+        return pasaporte.matches("[A-Z]\\d{6}");
+    }
+
 }

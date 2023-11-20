@@ -229,10 +229,19 @@ public class AerolineaTabbedWindow1Controller {
     void onAgregarBoletoButtonClick() {
         String codigo = codigoCombo.getValue();
         String pasaporte = pasaporteTextField.getText();
-        serviceBoleto.saveBoleto(codigo, pasaporte);
 
-        pasaporteTextField.clear();
-        pasaporteTextField.requestFocus();
+        if (serviceBoleto.validarPasaporte(pasaporte)) {
+            serviceBoleto.saveBoleto(codigo, pasaporte);
+            pasaporteTextField.clear();
+            pasaporteTextField.requestFocus();
+            showSuccess("Venta boleto", "Boleto vendido correctamente!", "");
+        } else {
+            showError("Error al vender boleto", "Formato de pasaporte incorrecto!", "Una letra mayuscula seguida de 6 numeros.");
+            pasaporteTextField.clear();
+            pasaporteTextField.requestFocus();
+        }
+
+        
     }
 
 }
