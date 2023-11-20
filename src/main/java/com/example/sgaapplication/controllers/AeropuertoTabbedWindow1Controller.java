@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.sgaapplication.persistency.RepositoryAerolinea;
 import com.example.sgaapplication.persistency.RepositoryAeropuerto;
+import com.example.sgaapplication.persistency.RepositoryBoleto;
 import com.example.sgaapplication.persistency.RepositoryVuelo;
 import com.example.sgaapplication.persistency.UserSession;
 import com.example.sgaapplication.services.aerolinea.Aerolinea;
@@ -17,9 +18,11 @@ import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aerolinea.ServiceAerolinea;
 import com.example.sgaapplication.services.aeropuerto.Aeropuerto;
 import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
+import com.example.sgaapplication.services.boleto.Boleto;
 import com.example.sgaapplication.services.vuelo.ServiceVuelo;
 import com.example.sgaapplication.services.vuelo.Vuelo;
 
+import ch.qos.logback.core.joran.action.Action;
 import ch.qos.logback.core.joran.conditional.IfAction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -68,6 +71,9 @@ public class AeropuertoTabbedWindow1Controller {
 
     @Autowired
     ServiceAeropuerto serviceAeropuerto;
+
+    @Autowired
+    RepositoryBoleto repositoryBoleto;
 
     @FXML
     private ToggleButton FuncionarioAlta;
@@ -155,6 +161,9 @@ public class AeropuertoTabbedWindow1Controller {
 
     @FXML
     private TableColumn<Vuelo, String> horaLlegadaColumnaConsulta;
+
+    @FXML
+    private Button VerVentasBoton;
 
     @FXML
     private ComboBox<String> aerolineasHabilitadasCombo;
@@ -330,5 +339,16 @@ public class AeropuertoTabbedWindow1Controller {
         String vueloSeleccionado = ValidacionTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
         serviceVuelo.denegarVuelo(vueloSeleccionado);
         showSuccess("Denegación correcta", "La denegación ha sido exitosa!", "El vuelo fue denegado por este aeropuerto.");
+    }
+
+    @FXML
+    void onVerVentasButtonClick(ActionEvent event) {
+        String vueloSeleccionado = ConsultaTabla.getSelectionModel().getSelectedItem().getCodigoVuelo();
+
+        List<Boleto> boletosDeVuelo = repositoryBoleto.findAll();
+
+        boletosDeVuelo.removeIf(e -> !e.getCodigo().equals(vueloSeleccionado));
+
+        showSuccess("Boletos vendidos", "Se vendieron " + boletosDeVuelo.size() + " boletos!", "");
     }
 }

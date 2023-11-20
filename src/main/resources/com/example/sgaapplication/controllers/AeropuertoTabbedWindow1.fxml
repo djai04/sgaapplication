@@ -89,6 +89,7 @@
                             <TableColumn fx:id="horaLlegadaColumnaConsulta" prefWidth="90.0" text="Hora llegada" />
                           </columns>
                         </TableView>
+                        <Button fx:id="VerVentasBoton" layoutX="765.0" layoutY="280.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" text="Ver ventas" onAction="#onVerVentasButtonClick" />
                      </children>
                   </AnchorPane>
               </content>
