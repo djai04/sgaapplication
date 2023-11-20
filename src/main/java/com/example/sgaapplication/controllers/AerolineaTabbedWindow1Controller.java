@@ -230,7 +230,7 @@ public class AerolineaTabbedWindow1Controller {
         String codigo = codigoCombo.getValue();
         String pasaporte = pasaporteTextField.getText();
 
-        if (serviceBoleto.validarPasaporte(pasaporte)) {
+        if (serviceBoleto.validarPasaporte(pasaporte, codigo)) {
             serviceBoleto.saveBoleto(codigo, pasaporte);
             pasaporteTextField.clear();
             pasaporteTextField.requestFocus();
