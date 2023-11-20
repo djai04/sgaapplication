@@ -40,5 +40,12 @@
                </children></AnchorPane>
       </content>
     </Tab>
+
+    <Tab text="Logout">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <Button fx:id="LogoutButton" layoutX="400.0" layoutY="400.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" text="Logout" onAction="#onLogoutButtonClick" />
+              </content>
+      </Tab>
   </tabs>
 </TabPane>

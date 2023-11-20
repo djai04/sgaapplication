@@ -1,6 +1,7 @@
 package com.example.sgaapplication.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import com.example.sgaapplication.persistency.RepositoryAerolinea;
@@ -10,15 +11,21 @@ import com.example.sgaapplication.services.aeropuerto.ServiceAeropuerto;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 
 @Controller
 @FxmlView("AdminTabbedWindow2.fxml")
 public class AdminTabbedWindow2Controller {
+
+    @Autowired
+    ConfigurableApplicationContext applicationContext;
 
     @Autowired
     ServiceAeropuerto serviceAeropuerto;
@@ -60,8 +67,20 @@ public class AdminTabbedWindow2Controller {
     private TextField AeropuertoPais;
 
     @FXML
+    private Button LogoutButton;
+
+    @FXML
     private void showError(String titulo, String header, String content) {
         Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void showSuccess(String titulo, String header, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(header);
         alert.setContentText(content);
@@ -77,6 +96,7 @@ public class AdminTabbedWindow2Controller {
             AeropuertoPais.clear();
             AeropuertoCiudad.clear();
             AeropuertoCodigo.requestFocus();
+            showSuccess("Alta de aeropuerto", "Aeropuerto dado de alta correctamente!", "");
         } else {
             showError("Error alta de aeropuerto", "No se pudo dar de alta el aeropuerto!", "Verificar que todos los datos cumplan con los estandares establecidos");
         }
@@ -90,8 +110,17 @@ public class AdminTabbedWindow2Controller {
             AerolineaNombre.clear();
             AerolineaPais.clear();
             AerolineaCodigo.requestFocus();
+            showSuccess("Alta de aerolinea", "Aerolinea dada de alta correctamente!", "");
         } else {
             showError("Error alta de aerolinea", "No se pudo dar de alta la aerolinea!", "Verificar que todos los datos cumplan con los estandares establecidos");
         }
+    }
+
+    @FXML
+    void onLogoutButtonClick(ActionEvent event) {
+        FxWeaver fxweaver1 = applicationContext.getBean(FxWeaver.class);
+        Parent root = fxweaver1.loadView(Login2Controller.class);
+        Scene scene = LogoutButton.getScene();
+        scene.setRoot(root);
     }
 }
